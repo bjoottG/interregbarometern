@@ -53,7 +53,7 @@ export default function KrysstabellPartners({ rows }: Props) {
   return (
     <div className="bg-white rounded-xl shadow-sm border p-5 h-full overflow-auto" style={{ borderColor: 'var(--color-border)' }}>
       <h3 className="font-bold text-base mb-3" style={{ color: 'var(--color-text)' }}>
-        Svenska projektpartners
+        Antal partners per organisationstyp och partnerroll
       </h3>
       <table className="w-full text-xs border-collapse">
         <thead>
