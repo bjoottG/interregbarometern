@@ -23,6 +23,15 @@ export default function KrysstabellPartners({ rows }: Props) {
     }
   }
 
+  function toggleRoll(roll: string) {
+    const current = filters.organisationsroll;
+    if (current.includes(roll)) {
+      setFilter('organisationsroll', current.filter((v) => v !== roll));
+    } else {
+      setFilter('organisationsroll', [...current, roll]);
+    }
+  }
+
   const { cells, orgTyper, total } = useMemo(() => {
     const map = new Map<string, Map<string, number>>();
 
@@ -51,9 +60,33 @@ export default function KrysstabellPartners({ rows }: Props) {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border p-5 h-full overflow-auto" style={{ borderColor: 'var(--color-border)' }}>
-      <h3 className="font-bold text-base mb-4" style={{ color: 'var(--color-text)' }}>
-        Svenska projektpartners
-      </h3>
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <h3 className="font-bold text-base" style={{ color: 'var(--color-text)' }}>
+          Svenska projektpartners
+        </h3>
+        <div className="flex items-center gap-1 flex-shrink-0">
+          <span className="text-xs mr-1" style={{ color: 'var(--color-text-muted)' }}>Partnerroll:</span>
+          {ROLLER.map((roll, i) => {
+            const isOn = filters.organisationsroll.length === 0 || filters.organisationsroll.includes(roll);
+            const active = filters.organisationsroll.includes(roll);
+            return (
+              <button
+                key={roll}
+                onClick={() => toggleRoll(roll)}
+                className="text-xs px-2 py-0.5 rounded-full border font-medium transition-colors"
+                style={{
+                  background: active ? ROLLER_COLORS[i] : 'white',
+                  color: active ? '#fff' : ROLLER_COLORS[i],
+                  borderColor: ROLLER_COLORS[i],
+                  opacity: !active && filters.organisationsroll.length > 0 ? 0.45 : 1,
+                }}
+              >
+                {ROLL_LABELS[roll] ?? roll}
+              </button>
+            );
+          })}
+        </div>
+      </div>
       <table className="w-full text-xs border-collapse">
         <thead>
           <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
@@ -116,9 +149,14 @@ export default function KrysstabellPartners({ rows }: Props) {
           })}
         </tbody>
       </table>
-      <p className="mt-3 text-xs" style={{ color: 'var(--color-text-muted)' }}>
-        Totalt {formatNumber(total)} partners
-      </p>
+      <div className="mt-3 flex items-center justify-between">
+        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+          Totalt {formatNumber(total)} partners
+        </p>
+        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+          Organisationstyp: klicka på rad för att filtrera
+        </p>
+      </div>
     </div>
   );
 }

@@ -4,8 +4,7 @@ import { useFilters } from '@/context/FilterContext';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import {
   PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
-  PAGAENDE_STATUS, ORG_ROLLER, ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER,
-  ORG_TYPER_DISPLAY, ORG_AGANDE,
+  PAGAENDE_STATUS, SPECIFIKT_MAL_DEFINITIONER, ORG_AGANDE,
 } from '@/types';
 
 export default function FilterBar() {
@@ -16,8 +15,6 @@ export default function FilterBar() {
     filters.politisktmal.length > 0 ||
     filters.specifiktmal.length > 0 ||
     filters.pagaende.length > 0 ||
-    filters.organisationsroll.length > 0 ||
-    filters.organisationstyp.length > 0 ||
     filters.organisationsagande.length > 0 ||
     filters.nuts3.length > 0;
 
@@ -48,15 +45,6 @@ export default function FilterBar() {
               options={PAGAENDE_STATUS}
               selected={filters.pagaende}
               onChange={(v) => setFilter('pagaende', v)}
-            />
-          </div>
-          <div className="w-52">
-            <MultiSelectDropdown
-              label="Partnerroll"
-              options={ORG_ROLLER}
-              selected={filters.organisationsroll}
-              onChange={(v) => setFilter('organisationsroll', v)}
-              getLabel={(v) => ROLL_LABELS[v] ?? v}
             />
           </div>
           <div className="ml-auto">
@@ -98,14 +86,6 @@ export default function FilterBar() {
               options={ORG_AGANDE}
               selected={filters.organisationsagande}
               onChange={(v) => setFilter('organisationsagande', v)}
-            />
-          </div>
-          <div className="w-64">
-            <MultiSelectDropdown
-              label="Organisationstyp"
-              options={ORG_TYPER_DISPLAY}
-              selected={filters.organisationstyp}
-              onChange={(v) => setFilter('organisationstyp', v)}
             />
           </div>
         </div>
