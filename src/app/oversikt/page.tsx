@@ -9,7 +9,7 @@ import KPICard from '@/components/KPICard';
 import NutsTable from '@/components/NutsTable';
 import ProgramTable from '@/components/ProgramTable';
 import KrysstabellPartners from '@/components/KrysstabellPartners';
-import BudgetBarChart from '@/components/BudgetBarChart';
+import BudgetMalTabell from '@/components/BudgetMalTabell';
 import { useFilters } from '@/context/FilterContext';
 import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber, formatBudget } from '@/lib/dataUtils';
 
@@ -101,10 +101,9 @@ export default function OversiktPage() {
           <KrysstabellPartners rows={filtered} />
         </div>
 
-        {/* Rad 4: Budget politiskt + specifikt */}
+        {/* Rad 4: Budget per mål */}
         <div className="grid grid-cols-2 gap-4 mb-5">
-          <BudgetBarChart rows={filtered} field="politisktmal" title="Budget per Politiskt mål" />
-          <BudgetBarChart rows={filtered} field="specifiktmal" title="Budget per Specifikt mål" />
+          <BudgetMalTabell rows={filtered} />
         </div>
       </main>
     </>

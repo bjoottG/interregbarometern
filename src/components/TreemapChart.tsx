@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { treemapData } from '@/lib/dataUtils';
-import { DIAGRAM_COLORS } from '@/types';
+import { DIAGRAM_COLORS, ROLL_LABELS } from '@/types';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
@@ -36,7 +36,7 @@ export default function TreemapChart({ rows }: Props) {
               </th>
               {ROLLER.map((r, i) => (
                 <th key={r} className="text-center py-2 px-3 font-semibold" style={{ color: DIAGRAM_COLORS[i] }}>
-                  {r}
+                  {ROLL_LABELS[r] ?? r}
                 </th>
               ))}
               <th className="text-center py-2 px-3 font-semibold" style={{ color: 'var(--color-text-muted)' }}>

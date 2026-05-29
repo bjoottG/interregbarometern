@@ -49,7 +49,7 @@ export const FILTER_DEFAULTS: FilterState = {
   nuts3: [],
 };
 
-export const PAGAENDE_STATUS = ['Pågående', 'Avslutad', 'Kommande'];
+export const PAGAENDE_STATUS = ['Pågående', 'Avslutad'];
 
 export const PROGRAMS = [
   'AURORA',
@@ -80,6 +80,37 @@ export const PROJEKTTYPER = ['Regular', 'Small', 'Feasibility study', 'Full Appl
 export const PROJEKTÅR = ['2022', '2023', '2024', '2025', '2026'];
 
 export const ORG_ROLLER = ['LP', 'PP', 'AP'];
+
+export const ROLL_LABELS: Record<string, string> = {
+  LP: 'Lead Partner',
+  PP: 'Projekt Partner',
+  AP: 'Associate partner',
+};
+
+export const SPECIFIKT_MAL_DEFINITIONER: Record<string, string> = {
+  'RSO1.1': 'Stärka forskning och innovation',
+  'RSO1.2': 'Säkra nyttan av digitaliseringen',
+  'RSO1.3': 'Små och medelstora företags tillväxt och konkurrenskraft',
+  'RSO1.4': 'Kompetens för smart specialisering och omställning',
+  'RSO1.5': 'Digital konnektivitet',
+  'RSO2.1': 'Energieffektivitet',
+  'RSO2.2': 'Förnybar energi',
+  'RSO2.3': 'Smarta energisystem',
+  'RSO2.4': 'Anpassa till klimatförändringarna',
+  'RSO2.5': 'Främjande av tillgång till vatten och hållbar vattenförvaltning',
+  'RSO2.6': 'Cirkulär ekonomi',
+  'RSO2.7': 'Biologisk mångfald',
+  'RSO2.8': 'Hållbar rörlighet i städer',
+  'RSO3.1': 'Hållbara TEN-T-nät',
+  'RSO3.2': 'Hållbara transporter',
+  'RSO4.1': 'Infrastruktur för arbetsmarknaden',
+  'RSO4.2': 'Göra utbildning och lärande tillgängligt för alla',
+  'RSO4.4': 'Främja social inkludering och bekämpa fattigdom',
+  'RSO4.6': 'Stärka kultur och hållbar turism',
+  'RSO5.1': 'Stärka den territoriella sammanhållningen och lokala utvecklingen',
+  'ISO6.6': 'Förbättra institutionell kapacitet och effektiv offentlig förvaltning',
+  'JSO8.1': 'Fonden för rättvis omställning',
+};
 
 export const NUTS2_VALUES = [
   'Gotland',

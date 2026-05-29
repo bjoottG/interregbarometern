@@ -2,7 +2,10 @@
 
 import { useFilters } from '@/context/FilterContext';
 import MultiSelectDropdown from './MultiSelectDropdown';
-import { PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES, PAGAENDE_STATUS } from '@/types';
+import {
+  PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
+  PAGAENDE_STATUS, ORG_ROLLER, ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER,
+} from '@/types';
 
 export default function FilterBar() {
   const { filters, setFilter, resetFilters } = useFilters();
@@ -12,6 +15,7 @@ export default function FilterBar() {
     filters.politisktmal.length > 0 ||
     filters.specifiktmal.length > 0 ||
     filters.pagaende.length > 0 ||
+    filters.organisationsroll.length > 0 ||
     filters.nuts3.length > 0;
 
   return (
@@ -43,6 +47,15 @@ export default function FilterBar() {
               onChange={(v) => setFilter('pagaende', v)}
             />
           </div>
+          <div className="w-52">
+            <MultiSelectDropdown
+              label="Partnerroll"
+              options={ORG_ROLLER}
+              selected={filters.organisationsroll}
+              onChange={(v) => setFilter('organisationsroll', v)}
+              getLabel={(v) => ROLL_LABELS[v] ?? v}
+            />
+          </div>
           <div className="ml-auto">
             <button
               onClick={resetFilters}
@@ -67,12 +80,13 @@ export default function FilterBar() {
               onChange={(v) => setFilter('program', v)}
             />
           </div>
-          <div className="w-44">
+          <div className="w-80">
             <MultiSelectDropdown
               label="Specifikt mål"
               options={SPECIFIKA_MAL}
               selected={filters.specifiktmal}
               onChange={(v) => setFilter('specifiktmal', v)}
+              getDescription={(v) => SPECIFIKT_MAL_DEFINITIONER[v] ?? ''}
             />
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { formatBudget, formatNumber, kpiTotalBudget } from '@/lib/dataUtils';
+import { ROLL_LABELS } from '@/types';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
@@ -106,7 +107,7 @@ export default function ProjectTable({ rows }: Props) {
                 <td className="py-1.5 px-2 max-w-[150px] truncate" style={{ color: 'var(--color-text)' }} title={row.organisationsnamn}>{row.organisationsnamn}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.organisationsagande}</td>
                 <td className="py-1.5 px-2 max-w-[140px] truncate" style={{ color: 'var(--color-text)' }} title={row.organisationstyp}>{row.organisationstyp}</td>
-                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.organisationsroll}</td>
+                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{ROLL_LABELS[row.organisationsroll] ?? row.organisationsroll}</td>
                 <td className="py-1.5 px-2 whitespace-nowrap" style={{ color: 'var(--color-text)' }}>{row.nuts3}</td>
                 <td className="py-1.5 px-2 text-right font-mono" style={{ color: 'var(--color-primary)' }}>
                   {formatBudget(row.partnerbudget)}

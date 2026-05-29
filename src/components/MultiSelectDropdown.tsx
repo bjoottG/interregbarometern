@@ -7,9 +7,13 @@ interface Props {
   options: string[];
   selected: string[];
   onChange: (value: string[]) => void;
+  getLabel?: (value: string) => string;
+  getDescription?: (value: string) => string;
 }
 
-export default function MultiSelectDropdown({ label, options, selected, onChange }: Props) {
+export default function MultiSelectDropdown({
+  label, options, selected, onChange, getLabel, getDescription,
+}: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -22,18 +26,17 @@ export default function MultiSelectDropdown({ label, options, selected, onChange
   }, []);
 
   function toggle(val: string) {
-    if (selected.includes(val)) {
-      onChange(selected.filter((v) => v !== val));
-    } else {
-      onChange([...selected, val]);
-    }
+    if (selected.includes(val)) onChange(selected.filter((v) => v !== val));
+    else onChange([...selected, val]);
   }
+
+  const displayLabel = (v: string) => getLabel ? getLabel(v) : v;
 
   const displayText =
     selected.length === 0
       ? `Alla värden (${options.length})`
       : selected.length === 1
-      ? selected[0]
+      ? displayLabel(selected[0])
       : `${selected.length} valda`;
 
   return (
@@ -58,24 +61,32 @@ export default function MultiSelectDropdown({ label, options, selected, onChange
 
         {open && (
           <div
-            className="absolute z-50 mt-1 w-full bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto"
-            style={{ borderColor: 'var(--color-border)' }}
+            className="absolute z-50 mt-1 w-full bg-white border rounded-lg shadow-lg max-h-72 overflow-y-auto"
+            style={{ borderColor: 'var(--color-border)', minWidth: getDescription ? 320 : undefined }}
           >
             {options.map((opt) => {
               const checked = selected.includes(opt);
+              const desc = getDescription ? getDescription(opt) : undefined;
               return (
                 <label
                   key={opt}
-                  className="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-gray-50"
+                  className="flex items-start gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-gray-50"
                 >
                   <input
                     type="checkbox"
                     checked={checked}
                     onChange={() => toggle(opt)}
-                    className="rounded"
+                    className="rounded mt-0.5 flex-shrink-0"
                     style={{ accentColor: 'var(--color-primary)' }}
                   />
-                  <span style={{ color: 'var(--color-text)' }}>{opt}</span>
+                  <span className="flex flex-col">
+                    <span style={{ color: 'var(--color-text)' }}>{displayLabel(opt)}</span>
+                    {desc && (
+                      <span className="text-xs leading-tight mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                        {desc}
+                      </span>
+                    )}
+                  </span>
                 </label>
               );
             })}

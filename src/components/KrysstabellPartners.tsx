@@ -6,6 +6,8 @@ import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
 
+import { ROLL_LABELS } from '@/types';
+
 const ROLLER = ['LP', 'PP', 'AP'];
 const ROLLER_COLORS = ['#00A896', '#4A1B8B', '#7B4FBC'];
 
@@ -69,7 +71,9 @@ export default function KrysstabellPartners({ rows }: Props) {
           <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
             <th className="text-left py-1.5 pr-3 font-semibold" style={{ color: 'var(--color-text-muted)' }} />
             {ROLLER.map((r, i) => (
-              <th key={r} className="text-center py-1.5 px-2 font-bold" style={{ color: ROLLER_COLORS[i] }}>{r}</th>
+              <th key={r} className="text-center py-1.5 px-2 font-bold" style={{ color: ROLLER_COLORS[i] }}>
+                {ROLL_LABELS[r] ?? r}
+              </th>
             ))}
             <th className="text-center py-1.5 px-2 font-semibold" style={{ color: 'var(--color-text-muted)' }}>Totalt</th>
           </tr>
