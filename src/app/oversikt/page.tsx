@@ -56,9 +56,9 @@ export default function OversiktPage() {
       <main className="max-w-[1200px] mx-auto px-6 py-5">
         {/* KPI-rad */}
         <div className="grid grid-cols-3 gap-4 mb-5">
-          <KPICard title="Projekt med svenska partners" value={`${formatNumber(kpis.projekt)} st`} />
-          <KPICard title="Budget för svenska partners" value={formatBudget(kpis.budget)} />
-          <KPICard title="Svenska partners" value={`${formatNumber(kpis.partners)} st`} />
+          <KPICard title="Antal projekt" value={`${formatNumber(kpis.projekt)} st`} href="/tabell" />
+          <KPICard title="Budget" value={formatBudget(kpis.budget)} />
+          <KPICard title="Antal partners" value={`${formatNumber(kpis.partners)} st`} href="/tabell" />
         </div>
 
         {/* Rad 2: Tabell + Karta */}
