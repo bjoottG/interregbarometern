@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const USER = 'demo';
 const PASS = 'demo456';
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const auth = req.headers.get('authorization');
 
   if (auth) {
