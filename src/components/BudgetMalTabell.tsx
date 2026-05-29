@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { groupBy, formatBudget } from '@/lib/dataUtils';
 import { DIAGRAM_COLORS, SPECIFIKT_MAL_DEFINITIONER } from '@/types';
+import { useFilters } from '@/context/FilterContext';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
@@ -21,6 +22,16 @@ const POLITISKT_MAL_DEFINITIONER: Record<string, string> = {
 
 export default function BudgetMalTabell({ rows }: Props) {
   const [tab, setTab] = useState<Tab>('politisktmal');
+  const { filters, setFilter } = useFilters();
+
+  function handleRowClick(name: string) {
+    const current = filters[tab];
+    if (current.includes(name)) {
+      setFilter(tab, current.filter((v) => v !== name));
+    } else {
+      setFilter(tab, [...current, name]);
+    }
+  }
 
   const data = useMemo(() => {
     return groupBy(rows, tab)
@@ -95,9 +106,21 @@ export default function BudgetMalTabell({ rows }: Props) {
           {data.map((d) => {
             const pct = totalBudget > 0 ? (d.budget / totalBudget) * 100 : 0;
             const barWidth = totalBudget > 0 ? (d.budget / maxBudget) * 100 : 0;
+            const isActive = filters[tab].includes(d.name);
             return (
-              <tr key={d.name} className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                <td className="py-2 pr-3 font-semibold" style={{ color: d.color }}>
+              <tr
+                key={d.name}
+                onClick={() => handleRowClick(d.name)}
+                className="border-b cursor-pointer transition-colors"
+                style={{
+                  borderColor: 'var(--color-border)',
+                  background: isActive ? 'var(--color-kpi-bg)' : undefined,
+                }}
+                onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = '#f9f9f9'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isActive ? 'var(--color-kpi-bg)' : ''; }}
+              >
+                <td className="py-2 pr-3 font-semibold" style={{ color: isActive ? 'var(--color-primary)' : d.color }}>
+                  {isActive && <span className="mr-1 text-xs">✓</span>}
                   {d.name}
                 </td>
                 <td className="py-2 pr-3" style={{ color: 'var(--color-text)' }}>
