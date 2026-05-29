@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import type { Projekt, FilterState } from '@/types';
-import { FILTER_DEFAULTS } from '@/types';
+import { FILTER_DEFAULTS, mapOrgTyp } from '@/types';
 
 const TODAY = '2026-05-29';
 
@@ -55,6 +55,8 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
       if (filters.projektår.length > 0 && !filters.projektår.includes(String(row.projektår))) return false;
       if (filters.organisationsnamn.length > 0 && !filters.organisationsnamn.includes(row.organisationsnamn)) return false;
       if (filters.organisationsroll.length > 0 && !filters.organisationsroll.includes(row.organisationsroll)) return false;
+      if (filters.organisationstyp.length > 0 && !filters.organisationstyp.includes(mapOrgTyp(row.organisationstyp))) return false;
+      if (filters.organisationsagande.length > 0 && !filters.organisationsagande.includes(row.organisationsagande)) return false;
       if (filters.pagaende.length > 0 && !filters.pagaende.includes(computeStatus(row))) return false;
       if (filters.aktiv !== 'Alla' && row.aktiv !== filters.aktiv) return false;
       if (filters.nuts2.length > 0 && !filters.nuts2.includes(row.nuts2)) return false;

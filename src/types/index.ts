@@ -28,6 +28,8 @@ export interface FilterState {
   projektår: string[];
   organisationsnamn: string[];
   organisationsroll: string[];
+  organisationstyp: string[];
+  organisationsagande: string[];
   pagaende: string[];   // Pågående Projekt: Pågående | Avslutad | Kommande
   aktiv: string;
   nuts2: string[];
@@ -43,6 +45,8 @@ export const FILTER_DEFAULTS: FilterState = {
   projektår: [],
   organisationsnamn: [],
   organisationsroll: [],
+  organisationstyp: [],
+  organisationsagande: [],
   pagaende: [],
   aktiv: 'Alla',
   nuts2: [],
@@ -80,6 +84,37 @@ export const PROJEKTTYPER = ['Regular', 'Small', 'Feasibility study', 'Full Appl
 export const PROJEKTÅR = ['2022', '2023', '2024', '2025', '2026'];
 
 export const ORG_ROLLER = ['LP', 'PP', 'AP'];
+
+export const ORG_AGANDE = ['Private', 'Public', 'Other'];
+
+export const ORG_TYP_MAP: Record<string, string> = {
+  'Regional public authority':    'Regional public authority',
+  'Higher education and research institution': 'Higher education',
+  'Education and research institution': 'Higher education',
+  'National public authority':    'National public authority',
+  'Research':                     'Research',
+  'Local public authority':       'Local public authority',
+  'Business support organisation':'Business support',
+  'Small or medium-sized enterprise (SME)': 'SME',
+  'Large enterprise':             'Large enterprise',
+  'Enterprise, except SME':       'Enterprise',
+  'NGO':                          'NGO',
+  'Interest groups including NGOs': 'NGO',
+  'Sectoral agency':              'Sectoral agency',
+  'Bodies governed by public law':'Bodies (public law)',
+  'Other':                        'Other',
+  'EGTC':                         'EGTC',
+  'Hospital and medical centre':  'Hospital and medical centre',
+  'Infrastructure and (Public organisation) service provider': 'Infrastructure and (Public organisation) service provider',
+  'International governmental organisation': 'International governmental organisation',
+  'national, regional and local authorities': 'national, regional and local authorities',
+};
+
+export function mapOrgTyp(raw: string | null | undefined): string {
+  return ORG_TYP_MAP[raw ?? ''] ?? raw ?? 'Okänd';
+}
+
+export const ORG_TYPER_DISPLAY = [...new Set(Object.values(ORG_TYP_MAP))].sort();
 
 export const ROLL_LABELS: Record<string, string> = {
   LP: 'Lead Partner',

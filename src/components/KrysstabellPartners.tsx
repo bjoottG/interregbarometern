@@ -2,39 +2,27 @@
 
 import { useMemo } from 'react';
 import { formatNumber } from '@/lib/dataUtils';
+import { ROLL_LABELS, mapOrgTyp } from '@/types';
+import { useFilters } from '@/context/FilterContext';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
 
-import { ROLL_LABELS } from '@/types';
-
 const ROLLER = ['LP', 'PP', 'AP'];
 const ROLLER_COLORS = ['#00A896', '#4A1B8B', '#7B4FBC'];
 
-// Map raw organisationstyp to display label
-const ORG_TYP_MAP: Record<string, string> = {
-  'Regional public authority':    'Regional public authority',
-  'Higher education and research institution': 'Higher education',
-  'Education and research institution': 'Higher education',
-  'National public authority':    'National public authority',
-  'Research':                     'Research',
-  'Local public authority':       'Local public authority',
-  'Business support organisation':'Business support',
-  'Small or medium-sized enterprise (SME)': 'SME',
-  'Large enterprise':             'Large enterprise',
-  'Enterprise, except SME':       'Enterprise',
-  'NGO':                          'NGO',
-  'Interest groups including NGOs': 'NGO',
-  'Sectoral agency':              'Sectoral agency',
-  'Bodies governed by public law':'Bodies (public law)',
-  'Other':                        'Other',
-};
-
-function mapOrgTyp(raw: string): string {
-  return ORG_TYP_MAP[raw] ?? raw ?? 'Okänd';
-}
-
 export default function KrysstabellPartners({ rows }: Props) {
+  const { filters, setFilter } = useFilters();
+
+  function handleRowClick(orgTyp: string) {
+    const current = filters.organisationstyp;
+    if (current.includes(orgTyp)) {
+      setFilter('organisationstyp', current.filter((v) => v !== orgTyp));
+    } else {
+      setFilter('organisationstyp', [...current, orgTyp]);
+    }
+  }
+
   const { cells, orgTyper, total } = useMemo(() => {
     const map = new Map<string, Map<string, number>>();
 
@@ -82,9 +70,23 @@ export default function KrysstabellPartners({ rows }: Props) {
           {orgTyper.map((orgTyp) => {
             const inner = cells.get(orgTyp)!;
             const rowTotal = Array.from(inner.values()).reduce((s, v) => s + v, 0);
+            const isActive = filters.organisationstyp.includes(orgTyp);
             return (
-              <tr key={orgTyp} className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                <td className="py-1.5 pr-3 font-medium" style={{ color: 'var(--color-text)' }}>{orgTyp}</td>
+              <tr
+                key={orgTyp}
+                onClick={() => handleRowClick(orgTyp)}
+                className="border-b cursor-pointer transition-colors"
+                style={{
+                  borderColor: 'var(--color-border)',
+                  background: isActive ? 'var(--color-kpi-bg)' : undefined,
+                }}
+                onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = '#f9f9f9'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isActive ? 'var(--color-kpi-bg)' : ''; }}
+              >
+                <td className="py-1.5 pr-3 font-medium" style={{ color: isActive ? 'var(--color-primary)' : 'var(--color-text)' }}>
+                  {isActive && <span className="mr-1 text-xs">✓</span>}
+                  {orgTyp}
+                </td>
                 {ROLLER.map((roll, ri) => {
                   const val = inner.get(roll) ?? 0;
                   const intensity = val / maxCell;
