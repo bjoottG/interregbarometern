@@ -20,7 +20,7 @@ export default function FilterBar() {
     filters.nuts3.length > 0;
 
   return (
-    <div className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
+    <div className="border-b" style={{ borderColor: 'var(--color-border)', background: '#EEEAF6' }}>
       <div className="max-w-[1200px] mx-auto px-6 py-3">
         {/* Rad 1 */}
         <div className="flex items-end gap-3 mb-2">

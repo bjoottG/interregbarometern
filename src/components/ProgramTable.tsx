@@ -59,10 +59,7 @@ export default function ProgramTable({ rows }: Props) {
 
   const activeFilter = filters.program;
 
-  function SortIcon({ col }: { col: SortKey }) {
-    if (sortKey !== col) return <span className="ml-1 opacity-30 text-xs">↕</span>;
-    return <span className="ml-1 text-xs">{sortDir === 'asc' ? '↑' : '↓'}</span>;
-  }
+  function SortIcon(_: { col: SortKey }) { return null; }
 
   const cols: [SortKey, string][] = [
     ['name', 'Program'],

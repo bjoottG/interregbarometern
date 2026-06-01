@@ -59,10 +59,7 @@ export default function ProjectTable({ rows }: Props) {
   const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const totalBudget = kpiTotalBudget(rows);
 
-  function SortIcon({ col }: { col: keyof Projekt }) {
-    if (sortKey !== col) return <span className="ml-1 opacity-30">↕</span>;
-    return <span className="ml-1">{sortDir === 'asc' ? '↑' : '↓'}</span>;
-  }
+  function SortIcon(_: { col: keyof Projekt }) { return null; }
 
   return (
     <div>
