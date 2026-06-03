@@ -21,37 +21,56 @@ export default function FilterBar() {
 
   return (
     <div className="border-b" style={{ borderColor: 'var(--color-border)', background: '#EEEAF6' }}>
-      <div className="max-w-[1200px] mx-auto px-6 py-3">
-        {/* Rad 1 */}
-        <div className="flex items-end gap-3 mb-2">
-          <div className="w-52">
-            <MultiSelectDropdown
-              label="NUTS 3 (Län)"
-              options={NUTS3_VALUES}
-              selected={filters.nuts3}
-              onChange={(v) => setFilter('nuts3', v)}
-            />
-          </div>
-          <div className="w-44">
-            <MultiSelectDropdown
-              label="Politiskt mål"
-              options={POLITISKA_MAL}
-              selected={filters.politisktmal}
-              onChange={(v) => setFilter('politisktmal', v)}
-            />
-          </div>
-          <div className="w-44">
-            <MultiSelectDropdown
-              label="Pågående Projekt"
-              options={PAGAENDE_STATUS}
-              selected={filters.pagaende}
-              onChange={(v) => setFilter('pagaende', v)}
-            />
-          </div>
-          <div className="ml-auto">
+      <div className="max-w-[1200px] mx-auto px-6 py-4">
+        <div className="grid grid-cols-4 gap-3">
+          <MultiSelectDropdown
+            label="NUTS 3 (Län)"
+            options={NUTS3_VALUES}
+            selected={filters.nuts3}
+            onChange={(v) => setFilter('nuts3', v)}
+          />
+          <MultiSelectDropdown
+            label="Politiskt mål"
+            options={POLITISKA_MAL}
+            selected={filters.politisktmal}
+            onChange={(v) => setFilter('politisktmal', v)}
+          />
+          <MultiSelectDropdown
+            label="Pågående Projekt"
+            options={PAGAENDE_STATUS}
+            selected={filters.pagaende}
+            onChange={(v) => setFilter('pagaende', v)}
+          />
+          <MultiSelectDropdown
+            label="Partnerroll"
+            options={ORG_ROLLER}
+            selected={filters.organisationsroll}
+            onChange={(v) => setFilter('organisationsroll', v)}
+            getLabel={(v) => ROLL_LABELS[v] ?? v}
+          />
+          <MultiSelectDropdown
+            label="Program"
+            options={PROGRAMS}
+            selected={filters.program}
+            onChange={(v) => setFilter('program', v)}
+          />
+          <MultiSelectDropdown
+            label="Specifikt mål"
+            options={SPECIFIKA_MAL}
+            selected={filters.specifiktmal}
+            onChange={(v) => setFilter('specifiktmal', v)}
+            getDescription={(v) => SPECIFIKT_MAL_DEFINITIONER[v] ?? ''}
+          />
+          <MultiSelectDropdown
+            label="Organisationstyp"
+            options={ORG_TYPER_DISPLAY}
+            selected={filters.organisationstyp}
+            onChange={(v) => setFilter('organisationstyp', v)}
+          />
+          <div className="flex items-end">
             <button
               onClick={resetFilters}
-              className="px-4 py-[7px] text-sm font-medium rounded-lg border transition-colors"
+              className="w-full px-4 py-[7px] text-sm font-medium rounded-lg border transition-colors"
               style={{
                 color: hasFilters ? 'var(--color-primary)' : 'var(--color-text-muted)',
                 borderColor: hasFilters ? 'var(--color-primary)' : 'var(--color-border)',
@@ -60,43 +79,6 @@ export default function FilterBar() {
             >
               Återställ filter
             </button>
-          </div>
-        </div>
-        {/* Rad 2 */}
-        <div className="flex items-end gap-3">
-          <div className="w-52">
-            <MultiSelectDropdown
-              label="Program"
-              options={PROGRAMS}
-              selected={filters.program}
-              onChange={(v) => setFilter('program', v)}
-            />
-          </div>
-          <div className="w-80">
-            <MultiSelectDropdown
-              label="Specifikt mål"
-              options={SPECIFIKA_MAL}
-              selected={filters.specifiktmal}
-              onChange={(v) => setFilter('specifiktmal', v)}
-              getDescription={(v) => SPECIFIKT_MAL_DEFINITIONER[v] ?? ''}
-            />
-          </div>
-          <div className="w-52">
-            <MultiSelectDropdown
-              label="Partnerroll"
-              options={ORG_ROLLER}
-              selected={filters.organisationsroll}
-              onChange={(v) => setFilter('organisationsroll', v)}
-              getLabel={(v) => ROLL_LABELS[v] ?? v}
-            />
-          </div>
-          <div className="w-64">
-            <MultiSelectDropdown
-              label="Organisationstyp"
-              options={ORG_TYPER_DISPLAY}
-              selected={filters.organisationstyp}
-              onChange={(v) => setFilter('organisationstyp', v)}
-            />
           </div>
         </div>
       </div>
