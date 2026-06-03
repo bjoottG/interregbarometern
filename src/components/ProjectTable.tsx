@@ -64,7 +64,7 @@ export default function ProjectTable({ rows }: Props) {
   return (
     <div>
       <div className="overflow-x-auto">
-        <table className="w-full text-xs border-collapse">
+        <table className="w-max min-w-full text-xs border-collapse">
           <thead>
             <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
               {COLS.map((col) => (

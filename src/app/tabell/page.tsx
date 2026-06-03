@@ -26,7 +26,7 @@ export default function TabellPage() {
       <Header />
       <FilterBar />
       <Navigation />
-      <main className="max-w-[1200px] mx-auto px-6 py-5">
+      <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
           <ProjectTable rows={filtered} />
         </div>
