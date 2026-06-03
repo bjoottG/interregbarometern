@@ -20,7 +20,7 @@ const POLITISKT_MAL_DEFINITIONER: Record<string, string> = {
 };
 
 export default function BudgetMalTabell({ rows }: Props) {
-  const [tab, setTab] = useState<Tab>('politisktmal');
+  const [tab, setTab] = useState<Tab>('specifiktmal');
   const { filters, setFilter } = useFilters();
 
   function handleRowClick(name: string) {
@@ -54,25 +54,25 @@ export default function BudgetMalTabell({ rows }: Props) {
         </h3>
         <div className="flex rounded-lg overflow-hidden border text-xs font-medium" style={{ borderColor: 'var(--color-border)' }}>
           <button
-            onClick={() => setTab('politisktmal')}
-            className="px-3 py-1.5 transition-colors"
-            style={{
-              background: tab === 'politisktmal' ? 'var(--color-primary)' : 'white',
-              color: tab === 'politisktmal' ? 'white' : 'var(--color-text-muted)',
-            }}
-          >
-            Politiskt mål
-          </button>
-          <button
             onClick={() => setTab('specifiktmal')}
-            className="px-3 py-1.5 transition-colors border-l"
+            className="px-3 py-1.5 transition-colors"
             style={{
               background: tab === 'specifiktmal' ? 'var(--color-primary)' : 'white',
               color: tab === 'specifiktmal' ? 'white' : 'var(--color-text-muted)',
-              borderColor: 'var(--color-border)',
             }}
           >
             Specifikt mål
+          </button>
+          <button
+            onClick={() => setTab('politisktmal')}
+            className="px-3 py-1.5 transition-colors border-l"
+            style={{
+              background: tab === 'politisktmal' ? 'var(--color-primary)' : 'white',
+              color: tab === 'politisktmal' ? 'white' : 'var(--color-text-muted)',
+              borderColor: 'var(--color-border)',
+            }}
+          >
+            Politiskt mål
           </button>
         </div>
       </div>
