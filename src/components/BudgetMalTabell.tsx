@@ -17,7 +17,6 @@ const POLITISKT_MAL_DEFINITIONER: Record<string, string> = {
   PO3: 'Ett mer sammanlänkat Europa',
   PO4: 'Ett mer socialt Europa',
   PO5: 'Ett Europa närmare medborgarna',
-  PO6: 'Övrigt politiskt mål',
 };
 
 export default function BudgetMalTabell({ rows }: Props) {
@@ -43,7 +42,6 @@ export default function BudgetMalTabell({ rows }: Props) {
   }, [rows, tab]);
 
   const totalBudget = data.reduce((s, d) => s + d.budget, 0);
-  const maxBudget = Math.max(...data.map(d => d.budget), 1);
 
   return (
     <div
@@ -94,15 +92,11 @@ export default function BudgetMalTabell({ rows }: Props) {
             <th className="text-right py-2 pl-3 font-semibold w-20" style={{ color: 'var(--color-text-muted)' }}>
               Andel
             </th>
-            <th className="py-2 pl-4 w-40 font-semibold" style={{ color: 'var(--color-text-muted)' }}>
-              Fördelning
-            </th>
           </tr>
         </thead>
         <tbody>
           {data.map((d) => {
             const pct = totalBudget > 0 ? (d.budget / totalBudget) * 100 : 0;
-            const barWidth = totalBudget > 0 ? (d.budget / maxBudget) * 100 : 0;
             const isActive = filters[tab].includes(d.name);
             return (
               <tr
@@ -128,14 +122,6 @@ export default function BudgetMalTabell({ rows }: Props) {
                 </td>
                 <td className="py-2 pl-3 text-right whitespace-nowrap" style={{ color: 'var(--color-text-muted)' }}>
                   {pct.toFixed(1)}%
-                </td>
-                <td className="py-2 pl-4">
-                  <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--color-border)' }}>
-                    <div
-                      className="h-full rounded-full"
-                      style={{ width: `${barWidth}%`, background: d.color }}
-                    />
-                  </div>
                 </td>
               </tr>
             );
