@@ -9,7 +9,6 @@ import type { Projekt } from '@/types';
 interface Props { rows: Projekt[] }
 
 const ROLLER = ['LP', 'PP', 'AP'];
-const ROLLER_COLORS = ['#00A896', '#4A1B8B', '#7B4FBC'];
 
 export default function KrysstabellPartners({ rows }: Props) {
   const { filters, setFilter } = useFilters();
@@ -41,12 +40,6 @@ export default function KrysstabellPartners({ rows }: Props) {
     return { cells: map, orgTyper, total: rows.length };
   }, [rows]);
 
-  const maxCell = useMemo(() => {
-    let m = 1;
-    for (const inner of cells.values()) for (const v of inner.values()) m = Math.max(m, v);
-    return m;
-  }, [cells]);
-
   return (
     <div className="bg-white rounded-xl shadow-sm border p-5 h-full overflow-auto" style={{ borderColor: 'var(--color-border)' }}>
       <h3 className="font-bold text-base mb-3" style={{ color: 'var(--color-text)' }}>
@@ -57,7 +50,7 @@ export default function KrysstabellPartners({ rows }: Props) {
           <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
             <th className="text-left py-1.5 pr-3 font-semibold" style={{ color: 'var(--color-text-muted)' }} />
             {ROLLER.map((r, i) => (
-              <th key={r} className="text-center py-1.5 px-2 font-bold" style={{ color: ROLLER_COLORS[i] }}>
+              <th key={r} className="text-center py-1.5 px-2 font-semibold" style={{ color: 'var(--color-text-muted)' }}>
                 {ROLL_LABELS[r] ?? r}
               </th>
             ))}
@@ -85,24 +78,11 @@ export default function KrysstabellPartners({ rows }: Props) {
                   {isActive && <span className="mr-1 text-xs">✓</span>}
                   {orgTyp}
                 </td>
-                {ROLLER.map((roll, ri) => {
+                {ROLLER.map((roll) => {
                   const val = inner.get(roll) ?? 0;
-                  const intensity = val / maxCell;
                   return (
-                    <td key={roll} className="py-1 px-1 text-center">
-                      {val > 0 ? (
-                        <div
-                          className="rounded px-1.5 py-0.5 inline-block min-w-[2.5rem] font-semibold"
-                          style={{
-                            background: `${ROLLER_COLORS[ri]}${Math.round((0.18 + intensity * 0.72) * 255).toString(16).padStart(2, '0')}`,
-                            color: intensity > 0.5 ? '#fff' : 'var(--color-text)',
-                          }}
-                        >
-                          {formatNumber(val)}
-                        </div>
-                      ) : (
-                        <span style={{ color: 'var(--color-text-muted)' }}>–</span>
-                      )}
+                    <td key={roll} className="py-1.5 px-2 text-center" style={{ color: val > 0 ? 'var(--color-text)' : 'var(--color-text-muted)' }}>
+                      {val > 0 ? formatNumber(val) : '–'}
                     </td>
                   );
                 })}
