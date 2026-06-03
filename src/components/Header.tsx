@@ -19,18 +19,6 @@ export default function Header() {
           Svenska Partners i Interreg
         </h1>
 
-        {/* Right nav */}
-        <nav className="ml-auto flex items-center gap-5">
-          {['Mitt konto', 'Hjälp', 'Logga ut'].map((label) => (
-            <span
-              key={label}
-              className="text-xs font-semibold tracking-widest uppercase cursor-pointer"
-              style={{ color: 'var(--color-text-muted)' }}
-            >
-              {label}
-            </span>
-          ))}
-        </nav>
       </div>
     </header>
   );
