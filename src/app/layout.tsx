@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Interregdatabas för svenska partners",
+  title: "Svenska Partners i Interreg",
   description: "Dashboard för Interreg-data om svenska projektpartners",
 };
 

@@ -15,8 +15,8 @@ export default function Header() {
         <div className="w-px self-stretch" style={{ background: 'var(--color-border)' }} />
 
         {/* Title */}
-        <h1 className="text-base font-bold" style={{ color: 'var(--color-text)' }}>
-          Svenska partners i Interreg
+        <h1 className="text-xl font-bold" style={{ color: 'var(--color-text)' }}>
+          Svenska Partners i Interreg
         </h1>
 
         {/* Right nav */}
