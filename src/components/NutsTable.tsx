@@ -52,11 +52,8 @@ export default function NutsTable({ rows, mode }: Props) {
   function handleRowClick(name: string) {
     const filterKey = mode === 'nuts3' ? 'nuts3' : 'nuts2';
     const current = filters[filterKey] as string[];
-    if (current.includes(name)) {
-      setFilter(filterKey, current.filter(n => n !== name));
-    } else {
-      setFilter(filterKey, [...current, name]);
-    }
+    if (current.includes(name)) return;
+    setFilter(filterKey, [...current, name]);
   }
 
   const activeFilter = (mode === 'nuts3' ? filters.nuts3 : filters.nuts2) as string[];

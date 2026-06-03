@@ -16,11 +16,8 @@ export default function KrysstabellPartners({ rows }: Props) {
 
   function handleRowClick(orgTyp: string) {
     const current = filters.organisationstyp;
-    if (current.includes(orgTyp)) {
-      setFilter('organisationstyp', current.filter((v) => v !== orgTyp));
-    } else {
-      setFilter('organisationstyp', [...current, orgTyp]);
-    }
+    if (current.includes(orgTyp)) return;
+    setFilter('organisationstyp', [...current, orgTyp]);
   }
 
 

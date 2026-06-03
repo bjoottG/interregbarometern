@@ -50,11 +50,8 @@ export default function ProgramTable({ rows }: Props) {
 
   function handleRowClick(name: string) {
     const current = filters.program;
-    if (current.includes(name)) {
-      setFilter('program', current.filter(n => n !== name));
-    } else {
-      setFilter('program', [...current, name]);
-    }
+    if (current.includes(name)) return;
+    setFilter('program', [...current, name]);
   }
 
   const activeFilter = filters.program;

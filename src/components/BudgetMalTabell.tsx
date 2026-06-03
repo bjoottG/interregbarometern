@@ -26,11 +26,8 @@ export default function BudgetMalTabell({ rows }: Props) {
 
   function handleRowClick(name: string) {
     const current = filters[tab];
-    if (current.includes(name)) {
-      setFilter(tab, current.filter((v) => v !== name));
-    } else {
-      setFilter(tab, [...current, name]);
-    }
+    if (current.includes(name)) return;
+    setFilter(tab, [...current, name]);
   }
 
   const data = useMemo(() => {
