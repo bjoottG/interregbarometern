@@ -122,6 +122,12 @@ export const ROLL_LABELS: Record<string, string> = {
   AP: 'Associate partner',
 };
 
+export const ROLL_DESCRIPTIONS: Record<string, string> = {
+  LP: 'Samordnad stödmottagare – ansvarar för projektet gentemot programsekretariatet',
+  PP: 'Medverkande projektpartner – deltar aktivt i projektgenomförandet',
+  AP: 'Associerad partner – deltar utan att erhålla projektmedel',
+};
+
 export const SPECIFIKT_MAL_DEFINITIONER: Record<string, string> = {
   'RSO1.1': 'Stärka forskning och innovation',
   'RSO1.2': 'Säkra nyttan av digitaliseringen',

@@ -4,7 +4,7 @@ import { useFilters } from '@/context/FilterContext';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import {
   PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
-  PAGAENDE_STATUS, SPECIFIKT_MAL_DEFINITIONER, ORG_ROLLER, ROLL_LABELS, ORG_TYPER_DISPLAY,
+  PAGAENDE_STATUS, SPECIFIKT_MAL_DEFINITIONER, ORG_ROLLER, ROLL_LABELS, ROLL_DESCRIPTIONS, ORG_TYPER_DISPLAY,
 } from '@/types';
 
 export default function FilterBar() {
@@ -47,6 +47,7 @@ export default function FilterBar() {
             selected={filters.organisationsroll}
             onChange={(v) => setFilter('organisationsroll', v)}
             getLabel={(v) => ROLL_LABELS[v] ?? v}
+            getDescription={(v) => ROLL_DESCRIPTIONS[v] ?? ''}
           />
           <MultiSelectDropdown
             label="Program"

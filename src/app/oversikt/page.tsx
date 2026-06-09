@@ -57,7 +57,7 @@ export default function OversiktPage() {
         {/* KPI-rad */}
         <div className="grid grid-cols-3 gap-4 mb-5">
           <KPICard title="Antal projekt" value={`${formatNumber(kpis.projekt)} st`} href="/tabell" />
-          <KPICard title="Budget" value={formatBudget(kpis.budget)} />
+          <KPICard title="Regionalfondsstöd" value={formatBudget(kpis.budget)} />
           <KPICard title="Antal partners" value={`${formatNumber(kpis.partners)} st`} href="/tabell" />
         </div>
 
@@ -69,7 +69,7 @@ export default function OversiktPage() {
                 Fördelning projekt och svenska partners per län
               </h3>
             </div>
-            <div className="overflow-auto" style={{ maxHeight: 460 }}>
+            <div className="overflow-auto" style={{ maxHeight: 560 }}>
               <NutsTable rows={filtered} mode={mapMode} />
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function OversiktPage() {
                 Antal projekt fördelat på Nuts3 (karta)
               </h3>
             </div>
-            <div style={{ height: 440 }}>
+            <div style={{ height: 560 }}>
               <SwedenMapLeaflet rows={filtered} mode={mapMode} onCountyClick={handleCountyClick} />
             </div>
           </div>

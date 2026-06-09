@@ -62,7 +62,7 @@ export default function ProgramTable({ rows }: Props) {
     ['name', 'Program'],
     ['projekt', 'Antal projekt'],
     ['partners', 'Antal projektpartners'],
-    ['budget', 'Partnerbudget EUR'],
+    ['budget', 'Regionalfondsstöd (EUR)'],
   ];
 
   return (

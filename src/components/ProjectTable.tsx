@@ -12,7 +12,6 @@ type SortDir = 'asc' | 'desc';
 
 const COLS: { key: keyof Projekt; label: string; numeric?: boolean }[] = [
   { key: 'program', label: 'Program' },
-  { key: 'politisktmal', label: 'Politiskt mål' },
   { key: 'specifiktmal', label: 'Specifikt mål' },
   { key: 'projekttyp', label: 'Projekttyp' },
   { key: 'projektnamn', label: 'Projektnamn' },
@@ -21,7 +20,7 @@ const COLS: { key: keyof Projekt; label: string; numeric?: boolean }[] = [
   { key: 'organisationstyp', label: 'Org. typ' },
   { key: 'organisationsroll', label: 'Roll' },
   { key: 'nuts3', label: 'Nuts3' },
-  { key: 'partnerbudget', label: 'Partnerbudget', numeric: true },
+  { key: 'partnerbudget', label: 'Regionalfondsstöd', numeric: true },
 ];
 
 const PAGE_SIZE = 50;
@@ -81,7 +80,7 @@ export default function ProjectTable({ rows }: Props) {
             </tr>
             {/* Totalrad */}
             <tr className="border-b" style={{ borderColor: 'var(--color-border)', background: 'var(--color-kpi-bg)' }}>
-              <td className="py-2 px-2 font-semibold" style={{ color: 'var(--color-primary)' }} colSpan={10}>
+              <td className="py-2 px-2 font-semibold" style={{ color: 'var(--color-primary)' }} colSpan={9}>
                 Totaler ({formatNumber(rows.length)} rader)
               </td>
               <td className="py-2 px-2 font-semibold text-right font-mono" style={{ color: 'var(--color-primary)' }}>
@@ -97,7 +96,6 @@ export default function ProjectTable({ rows }: Props) {
                 style={{ borderColor: 'var(--color-border)' }}
               >
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.program}</td>
-                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.politisktmal}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.specifiktmal}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.projekttyp}</td>
                 <td className="py-1.5 px-2 max-w-[180px] truncate" style={{ color: 'var(--color-text)' }} title={row.projektnamn}>{row.projektnamn}</td>

@@ -58,8 +58,8 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
       }
 
       const map = L.map(mapRef.current, {
-        center: [62.5, 16.5],
-        zoom: 4,
+        center: [63.5, 17.0],
+        zoom: 5,
         zoomControl: true,
         scrollWheelZoom: false,
       });
@@ -139,7 +139,7 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
 
   return (
     <div className="relative w-full h-full min-h-[420px]">
-      <div ref={mapRef} className="w-full h-full rounded-b-xl" style={{ minHeight: 420 }} />
+      <div ref={mapRef} className="w-full h-full rounded-b-xl" style={{ minHeight: 520 }} />
       {/* Legend */}
       <div
         className="absolute bottom-6 left-3 z-[1000] bg-white rounded-lg px-3 py-2 text-xs shadow"

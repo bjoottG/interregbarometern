@@ -21,7 +21,7 @@ export function kpiTotalBudget(rows: Projekt[]): number {
 }
 
 export function kpiAntalPartners(rows: Projekt[]): number {
-  return new Set(rows.map((r) => r.organisationsnamn)).size;
+  return rows.length;
 }
 
 // ─── Aggregeringar ──────────────────────────────────────────────────────────
