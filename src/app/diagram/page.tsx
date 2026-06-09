@@ -19,14 +19,13 @@ const ROLE_COLORS: Record<string, string> = {
 };
 
 const MAX_LABEL = 24;
-function TruncatedTick({ x, y, payload, textAnchor, fontSize }: {
+function TruncatedTick({ x, y, payload }: {
   x?: number; y?: number; payload?: { value: string };
-  textAnchor?: string; fontSize?: number;
 }) {
   const label = (payload?.value ?? '');
   const display = label.length > MAX_LABEL ? label.slice(0, MAX_LABEL - 1) + '…' : label;
   return (
-    <text x={x} y={y} dy={4} textAnchor={textAnchor ?? 'end'} fontSize={fontSize ?? 10} fill="var(--color-text-muted)">
+    <text x={x} y={y} dy={4} textAnchor="end" fontSize={10} fill="var(--color-text-muted)">
       {display}
     </text>
   );
