@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import FilterBar from '@/components/FilterBar';
@@ -8,6 +9,18 @@ import { useFilters } from '@/context/FilterContext';
 
 export default function TabellPage() {
   const { filtered, isLoading } = useFilters();
+  const [input, setInput] = useState('');
+  const [query, setQuery] = useState('');
+
+  function handleSearch() {
+    setQuery(input.trim());
+  }
+
+  const rows = useMemo(() => {
+    if (!query) return filtered;
+    const q = query.toLowerCase();
+    return filtered.filter(r => r.organisationsnamn?.toLowerCase().includes(q));
+  }, [filtered, query]);
 
   if (isLoading) {
     return (
@@ -25,10 +38,53 @@ export default function TabellPage() {
     <>
       <Header />
       <Navigation />
+
+      {/* Sökfält */}
+      <div className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
+        <div className="max-w-[1400px] mx-auto px-6 py-3 flex items-center gap-3">
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSearch()}
+            placeholder="Sök på Partner/Organisation…"
+            className="flex-1 max-w-md px-3 py-2 text-sm border rounded-lg outline-none"
+            style={{
+              borderColor: 'var(--color-border)',
+              color: 'var(--color-text)',
+            }}
+            onFocus={e => (e.target.style.borderColor = 'var(--color-primary)')}
+            onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
+          />
+          <button
+            onClick={handleSearch}
+            className="px-4 py-2 text-sm font-medium rounded-lg"
+            style={{ background: 'var(--color-primary)', color: '#fff' }}
+          >
+            Sök
+          </button>
+          {query && (
+            <button
+              onClick={() => { setInput(''); setQuery(''); }}
+              className="text-sm"
+              style={{ color: 'var(--color-text-muted)' }}
+            >
+              Rensa
+            </button>
+          )}
+          {query && (
+            <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+              {rows.length} träffar för "{query}"
+            </span>
+          )}
+        </div>
+      </div>
+
       <FilterBar />
+
       <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
-          <ProjectTable rows={filtered} />
+          <ProjectTable rows={rows} />
         </div>
       </main>
     </>
