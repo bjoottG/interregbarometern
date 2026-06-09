@@ -38,6 +38,7 @@ export default function TabellPage() {
     <>
       <Header />
       <Navigation />
+      <FilterBar />
 
       {/* Sökfält */}
       <div className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
@@ -84,8 +85,6 @@ export default function TabellPage() {
           )}
         </div>
       </div>
-
-      <FilterBar />
 
       <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
