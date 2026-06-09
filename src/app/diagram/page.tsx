@@ -18,6 +18,20 @@ const ROLE_COLORS: Record<string, string> = {
   AP: '#7B4FBC',
 };
 
+const MAX_LABEL = 24;
+function TruncatedTick({ x, y, payload, textAnchor, fontSize }: {
+  x?: number; y?: number; payload?: { value: string };
+  textAnchor?: string; fontSize?: number;
+}) {
+  const label = (payload?.value ?? '');
+  const display = label.length > MAX_LABEL ? label.slice(0, MAX_LABEL - 1) + '…' : label;
+  return (
+    <text x={x} y={y} dy={4} textAnchor={textAnchor ?? 'end'} fontSize={fontSize ?? 10} fill="var(--color-text-muted)">
+      {display}
+    </text>
+  );
+}
+
 function ChartCard({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
@@ -196,7 +210,7 @@ export default function DiagramPage() {
             <ResponsiveContainer width="100%" height={380}>
               <BarChart layout="vertical" data={perOrgTyp} margin={{ left: 4, right: 40, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis type="category" dataKey="name" width={185} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
+                <YAxis type="category" dataKey="name" width={185} tick={<TruncatedTick />} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
                 <Bar dataKey="value" fill={DIAGRAM_COLORS[1]} radius={[0, 3, 3, 0]} maxBarSize={14} />
               </BarChart>
@@ -207,7 +221,7 @@ export default function DiagramPage() {
             <ResponsiveContainer width="100%" height={380}>
               <BarChart layout="vertical" data={perOrgRoll} margin={{ left: 4, right: 8, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis type="category" dataKey="name" width={185} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
+                <YAxis type="category" dataKey="name" width={185} tick={<TruncatedTick />} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} />
                 <Legend iconType="square" wrapperStyle={{ fontSize: 11, paddingTop: 4 }}
                   formatter={(v) => ROLL_LABELS[v] ?? v} />
