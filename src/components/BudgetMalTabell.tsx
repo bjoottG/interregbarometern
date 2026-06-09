@@ -50,7 +50,7 @@ export default function BudgetMalTabell({ rows }: Props) {
     >
       <div className="flex items-center gap-3 mb-4">
         <h3 className="font-bold text-base" style={{ color: 'var(--color-text)' }}>
-          Regionalfondsstöd per mål
+          EU-medel (ERDF) per mål
         </h3>
         <div className="flex rounded-lg overflow-hidden border text-xs font-medium" style={{ borderColor: 'var(--color-border)' }}>
           <button
@@ -87,7 +87,7 @@ export default function BudgetMalTabell({ rows }: Props) {
               Definition
             </th>
             <th className="text-right py-2 px-3 font-semibold whitespace-nowrap" style={{ color: 'var(--color-text-muted)' }}>
-              Regionalfondsstöd (EUR)
+              EU-medel (ERDF)
             </th>
             <th className="text-right py-2 pl-3 font-semibold w-20" style={{ color: 'var(--color-text-muted)' }}>
               Andel

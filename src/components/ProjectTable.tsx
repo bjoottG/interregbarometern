@@ -21,7 +21,7 @@ const COLS: { key: keyof Projekt; label: string; numeric?: boolean }[] = [
   { key: 'organisationstyp', label: 'Org. typ' },
   { key: 'organisationsroll', label: 'Roll' },
   { key: 'nuts3', label: 'Nuts3' },
-  { key: 'partnerbudget', label: 'Regionalfondsstöd', numeric: true },
+  { key: 'partnerbudget', label: 'EU-medel (ERDF)', numeric: true },
 ];
 
 const PAGE_SIZE = 50;

@@ -79,14 +79,14 @@ export default function DiagramPage() {
       .sort((a, b) => b.total - a.total);
   }, [filtered]);
 
-  /* ── Regionalfondsstöd per specifikt mål ── */
+  /* ── EU-medel (ERDF) per specifikt mål ── */
   const perSpecifiktmal = useMemo(() =>
     groupBy(filtered, 'specifiktmal')
       .sort((a, b) => a.name.localeCompare(b.name, 'sv', { numeric: true }))
       .map(d => ({ name: d.name, budget: d.budget, def: SPECIFIKT_MAL_DEFINITIONER[d.name] ?? d.name })),
   [filtered]);
 
-  /* ── Regionalfondsstöd per politiskt mål ── */
+  /* ── EU-medel (ERDF) per politiskt mål ── */
   const perPolitisktmal = useMemo(() =>
     groupBy(filtered, 'politisktmal')
       .sort((a, b) => a.name.localeCompare(b.name, 'sv', { numeric: true }))
@@ -231,28 +231,28 @@ export default function DiagramPage() {
           </ResponsiveContainer>
         </ChartCard>
 
-        {/* Rad 4: Regionalfondsstöd per mål */}
+        {/* Rad 4: EU-medel (ERDF) per mål */}
         <div className="grid grid-cols-2 gap-5">
-          <ChartCard title="Regionalfondsstöd per politiskt mål">
+          <ChartCard title="EU-medel (ERDF) per politiskt mål">
             <ResponsiveContainer width="100%" height={220}>
               <BarChart layout="vertical" data={perPolitisktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)}M`} />
                 <YAxis type="category" dataKey="name" width={40} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
-                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'Regionalfondsstöd']} />
+                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
                 <Bar dataKey="budget" fill={DIAGRAM_COLORS[2]} radius={[0, 3, 3, 0]} maxBarSize={18} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
 
-          <ChartCard title="Regionalfondsstöd per specifikt mål">
+          <ChartCard title="EU-medel (ERDF) per specifikt mål">
             <ResponsiveContainer width="100%" height={220}>
               <BarChart layout="vertical" data={perSpecifiktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)}M`} />
                 <YAxis type="category" dataKey="name" width={55} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={TOOLTIP_STYLE}
-                  formatter={(v) => [formatBudget(Number(v)), 'Regionalfondsstöd']}
+                  formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']}
                   labelFormatter={(l) => {
                     const d = perSpecifiktmal.find(x => x.name === l);
                     return d?.def ?? l;
