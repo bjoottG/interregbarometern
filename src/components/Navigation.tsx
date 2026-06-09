@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 const tabs = [
   { label: 'Översikt', href: '/oversikt' },
   { label: 'Diagram', href: '/diagram' },
-  { label: 'Visa partners och projekt', href: '/tabell' },
+  { label: 'Partners i lista', href: '/tabell' },
 ];
 
 export default function Navigation() {
