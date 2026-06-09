@@ -58,8 +58,8 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
       }
 
       const map = L.map(mapRef.current, {
-        center: [62.5, 15.5],
-        zoom: 4,
+        center: [62.0, 15.5],
+        zoom: 5,
         zoomControl: true,
         scrollWheelZoom: false,
       });
@@ -112,6 +112,8 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
           lyr.on('click', () => { if (onCountyClick) onCountyClick(name); });
         },
       }).addTo(map);
+
+      map.fitBounds(layer.getBounds(), { padding: [10, 10] });
 
       leafletRef.current = { map, layer };
     }
