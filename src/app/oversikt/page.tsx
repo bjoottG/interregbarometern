@@ -69,7 +69,7 @@ export default function OversiktPage() {
                 Fördelning projekt och svenska partners per län
               </h3>
             </div>
-            <div className="overflow-auto" style={{ maxHeight: 560 }}>
+            <div className="overflow-auto" style={{ maxHeight: 700 }}>
               <NutsTable rows={filtered} mode={mapMode} />
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function OversiktPage() {
                 Antal projekt fördelat på Nuts3 (karta)
               </h3>
             </div>
-            <div style={{ height: 560 }}>
+            <div style={{ height: 700 }}>
               <SwedenMapLeaflet rows={filtered} mode={mapMode} onCountyClick={handleCountyClick} />
             </div>
           </div>
