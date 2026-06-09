@@ -140,10 +140,10 @@ export default function DiagramPage() {
         {/* Rad 1: Program + Programkategori */}
         <div className="grid grid-cols-2 gap-5">
           <ChartCard title="Antal partners per program">
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={300}>
               <BarChart layout="vertical" data={perProgram} margin={{ left: 4, right: 40, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis type="category" dataKey="name" width={190} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="name" width={190} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
                 <Bar dataKey="antalPartners" radius={[0, 3, 3, 0]} maxBarSize={18}>
                   {perProgram.map((_, i) => <Cell key={i} fill={DIAGRAM_COLORS[i % DIAGRAM_COLORS.length]} />)}
@@ -153,30 +153,30 @@ export default function DiagramPage() {
           </ChartCard>
 
           <div className="grid grid-rows-2 gap-5">
-            <ChartCard title="Partners per programkategori">
-              <ResponsiveContainer width="100%" height={100}>
+            <ChartCard title="Antal partners per programkategori">
+              <ResponsiveContainer width="100%" height={110}>
                 <BarChart layout="vertical" data={perStrand} margin={{ left: 4, right: 50, top: 0, bottom: 0 }}>
                   <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                  <YAxis type="category" dataKey="name" width={175} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
+                  <YAxis type="category" dataKey="name" width={175} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
                   <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
-                  <Bar dataKey="value" radius={[0, 3, 3, 0]} maxBarSize={18}>
+                  <Bar dataKey="value" radius={[0, 3, 3, 0]} maxBarSize={22}>
                     {perStrand.map((_, i) => <Cell key={i} fill={DIAGRAM_COLORS[i % DIAGRAM_COLORS.length]} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </ChartCard>
 
-            <ChartCard title="Partners per partnerroll">
-              <div className="flex items-center justify-center" style={{ height: 110 }}>
-                <ResponsiveContainer width="60%" height={110}>
+            <ChartCard title="Antal partners per partnerroll">
+              <div className="flex items-center justify-center" style={{ height: 130 }}>
+                <ResponsiveContainer width="55%" height={130}>
                   <PieChart>
-                    <Pie data={perRoll} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={45} innerRadius={22}>
+                    <Pie data={perRoll} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={52} innerRadius={26}>
                       {perRoll.map((d) => <Cell key={d.key} fill={ROLE_COLORS[d.key] ?? '#ccc'} />)}
                     </Pie>
                     <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`]} />
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="flex flex-col gap-1 text-xs">
+                <div className="flex flex-col gap-1.5 text-xs">
                   {perRoll.map(d => (
                     <div key={d.key} className="flex items-center gap-1.5">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: ROLE_COLORS[d.key] }} />
@@ -190,13 +190,13 @@ export default function DiagramPage() {
           </div>
         </div>
 
-        {/* Rad 2: Organisationstyp + Län */}
+        {/* Rad 2: Organisationstyp */}
         <div className="grid grid-cols-2 gap-5">
           <ChartCard title="Antal partners per organisationstyp">
-            <ResponsiveContainer width="100%" height={340}>
+            <ResponsiveContainer width="100%" height={380}>
               <BarChart layout="vertical" data={perOrgTyp} margin={{ left: 4, right: 40, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis type="category" dataKey="name" width={185} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="name" width={185} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
                 <Bar dataKey="value" fill={DIAGRAM_COLORS[1]} radius={[0, 3, 3, 0]} maxBarSize={14} />
               </BarChart>
@@ -204,10 +204,10 @@ export default function DiagramPage() {
           </ChartCard>
 
           <ChartCard title="Antal partners per organisationstyp och partnerroll" subtitle="Staplarna visar LP, PP och AP per organisationstyp">
-            <ResponsiveContainer width="100%" height={340}>
+            <ResponsiveContainer width="100%" height={380}>
               <BarChart layout="vertical" data={perOrgRoll} margin={{ left: 4, right: 8, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                <YAxis type="category" dataKey="name" width={185} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="name" width={185} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} />
                 <Legend iconType="square" wrapperStyle={{ fontSize: 11, paddingTop: 4 }}
                   formatter={(v) => ROLL_LABELS[v] ?? v} />
@@ -221,12 +221,12 @@ export default function DiagramPage() {
 
         {/* Rad 3: Län */}
         <ChartCard title="Antal partners per län (top 15)">
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={340}>
             <BarChart layout="vertical" data={perLan} margin={{ left: 4, right: 50, top: 0, bottom: 0 }}>
               <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-              <YAxis type="category" dataKey="name" width={lanYWidth} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
+              <YAxis type="category" dataKey="name" width={lanYWidth} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
               <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
-              <Bar dataKey="value" fill={DIAGRAM_COLORS[0]} radius={[0, 3, 3, 0]} maxBarSize={14} />
+              <Bar dataKey="value" fill={DIAGRAM_COLORS[0]} radius={[0, 3, 3, 0]} maxBarSize={16} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -234,30 +234,30 @@ export default function DiagramPage() {
         {/* Rad 4: EU-medel (ERDF) per mål */}
         <div className="grid grid-cols-2 gap-5">
           <ChartCard title="EU-medel (ERDF) per politiskt mål">
-            <ResponsiveContainer width="100%" height={220}>
+            <ResponsiveContainer width="100%" height={240}>
               <BarChart layout="vertical" data={perPolitisktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)}M`} />
-                <YAxis type="category" dataKey="name" width={40} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="name" width={40} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
-                <Bar dataKey="budget" fill={DIAGRAM_COLORS[2]} radius={[0, 3, 3, 0]} maxBarSize={18} />
+                <Bar dataKey="budget" fill={DIAGRAM_COLORS[2]} radius={[0, 3, 3, 0]} maxBarSize={22} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
 
           <ChartCard title="EU-medel (ERDF) per specifikt mål">
-            <ResponsiveContainer width="100%" height={220}>
+            <ResponsiveContainer width="100%" height={420}>
               <BarChart layout="vertical" data={perSpecifiktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)}M`} />
-                <YAxis type="category" dataKey="name" width={55} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
+                <YAxis type="category" dataKey="name" width={55} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE}
                   formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']}
                   labelFormatter={(l) => {
                     const d = perSpecifiktmal.find(x => x.name === l);
                     return d?.def ?? l;
                   }} />
-                <Bar dataKey="budget" fill={DIAGRAM_COLORS[3]} radius={[0, 3, 3, 0]} maxBarSize={10} />
+                <Bar dataKey="budget" fill={DIAGRAM_COLORS[3]} radius={[0, 3, 3, 0]} maxBarSize={12} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
