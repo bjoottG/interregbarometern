@@ -2,22 +2,13 @@
 
 import { useState, useMemo } from 'react';
 import { groupBy, formatBudget } from '@/lib/dataUtils';
-import { DIAGRAM_COLORS, SPECIFIKT_MAL_DEFINITIONER } from '@/types';
+import { DIAGRAM_COLORS, SPECIFIKT_MAL_DEFINITIONER, POLITISKT_MAL_DEFINITIONER } from '@/types';
 import { useFilters } from '@/context/FilterContext';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
 
 type Tab = 'politisktmal' | 'specifiktmal';
-
-const POLITISKT_MAL_DEFINITIONER: Record<string, string> = {
-  ISO: 'Interreg-specifika mål',
-  PO1: 'Ett smartare Europa',
-  PO2: 'Ett grönare Europa',
-  PO3: 'Ett mer sammanlänkat Europa',
-  PO4: 'Ett mer socialt Europa',
-  PO5: 'Ett Europa närmare medborgarna',
-};
 
 export default function BudgetMalTabell({ rows }: Props) {
   const [tab, setTab] = useState<Tab>('specifiktmal');

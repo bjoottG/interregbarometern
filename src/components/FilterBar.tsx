@@ -4,8 +4,8 @@ import { useFilters } from '@/context/FilterContext';
 import MultiSelectDropdown from './MultiSelectDropdown';
 import {
   PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
-  PAGAENDE_STATUS, SPECIFIKT_MAL_DEFINITIONER, ORG_ROLLER, ROLL_LABELS, ROLL_DESCRIPTIONS, ORG_TYPER_DISPLAY,
-  STRAND_VALUES,
+  PAGAENDE_STATUS, SPECIFIKT_MAL_DEFINITIONER, POLITISKT_MAL_DEFINITIONER,
+  ORG_ROLLER, ROLL_LABELS, ROLL_DESCRIPTIONS, ORG_TYPER_DISPLAY, STRAND_VALUES,
 } from '@/types';
 
 export default function FilterBar() {
@@ -36,6 +36,7 @@ export default function FilterBar() {
             options={POLITISKA_MAL}
             selected={filters.politisktmal}
             onChange={(v) => setFilter('politisktmal', v)}
+            getDescription={(v) => POLITISKT_MAL_DEFINITIONER[v] ?? ''}
           />
           <MultiSelectDropdown
             label="Pågående Projekt"

@@ -138,6 +138,15 @@ export const ROLL_DESCRIPTIONS: Record<string, string> = {
   AP: 'Associerad partner – deltar utan att erhålla projektmedel',
 };
 
+export const POLITISKT_MAL_DEFINITIONER: Record<string, string> = {
+  ISO:  'Interreg-specifika mål',
+  PO1:  'Ett smartare Europa',
+  PO2:  'Ett grönare Europa',
+  PO3:  'Ett mer sammanlänkat Europa',
+  PO4:  'Ett mer socialt Europa',
+  PO5:  'Ett Europa närmare medborgarna',
+};
+
 export const SPECIFIKT_MAL_DEFINITIONER: Record<string, string> = {
   'RSO1.1': 'Stärka forskning och innovation',
   'RSO1.2': 'Säkra nyttan av digitaliseringen',
