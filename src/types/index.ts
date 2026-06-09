@@ -17,10 +17,19 @@ export interface Projekt {
   projektår: number;
   land: string;
   aktiv: string;
+  strand_kod: string;
+  strand_namn: string;
 }
+
+export const STRAND_VALUES = [
+  'A – Gränsregionalt',
+  'B – Transnationellt',
+  'C – Interregionalt',
+];
 
 export interface FilterState {
   program: string[];
+  strand: string[];
   politisktmal: string[];
   specifiktmal: string[];
   projektnamn: string[];
@@ -38,6 +47,7 @@ export interface FilterState {
 
 export const FILTER_DEFAULTS: FilterState = {
   program: [],
+  strand: [],
   politisktmal: [],
   specifiktmal: [],
   projektnamn: [],

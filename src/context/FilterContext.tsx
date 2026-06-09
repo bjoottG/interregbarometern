@@ -48,6 +48,7 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
   const filtered = React.useMemo(() => {
     return data.filter((row) => {
       if (filters.program.length > 0 && !filters.program.includes(row.program)) return false;
+      if (filters.strand.length > 0 && !filters.strand.includes(`${row.strand_kod} – ${row.strand_namn}`)) return false;
       if (filters.politisktmal.length > 0 && !filters.politisktmal.includes(row.politisktmal)) return false;
       if (filters.specifiktmal.length > 0 && !filters.specifiktmal.includes(row.specifiktmal)) return false;
       if (filters.projektnamn.length > 0 && !filters.projektnamn.includes(row.projektnamn)) return false;

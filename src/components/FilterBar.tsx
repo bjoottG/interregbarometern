@@ -5,12 +5,14 @@ import MultiSelectDropdown from './MultiSelectDropdown';
 import {
   PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
   PAGAENDE_STATUS, SPECIFIKT_MAL_DEFINITIONER, ORG_ROLLER, ROLL_LABELS, ROLL_DESCRIPTIONS, ORG_TYPER_DISPLAY,
+  STRAND_VALUES,
 } from '@/types';
 
 export default function FilterBar() {
   const { filters, setFilter, resetFilters } = useFilters();
 
   const hasFilters =
+    filters.strand.length > 0 ||
     filters.program.length > 0 ||
     filters.politisktmal.length > 0 ||
     filters.specifiktmal.length > 0 ||
@@ -48,6 +50,12 @@ export default function FilterBar() {
             onChange={(v) => setFilter('organisationsroll', v)}
             getLabel={(v) => ROLL_LABELS[v] ?? v}
             getDescription={(v) => ROLL_DESCRIPTIONS[v] ?? ''}
+          />
+          <MultiSelectDropdown
+            label="Programkategori"
+            options={STRAND_VALUES}
+            selected={filters.strand}
+            onChange={(v) => setFilter('strand', v)}
           />
           <MultiSelectDropdown
             label="Program"
