@@ -185,8 +185,8 @@ export default function DiagramPage() {
   return (
     <>
       <Header />
-      <FilterBar />
       <Navigation />
+      <FilterBar />
 
       <main className="max-w-[1200px] mx-auto px-6 py-5 flex flex-col gap-5">
 
