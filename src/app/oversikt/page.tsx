@@ -68,6 +68,9 @@ export default function OversiktPage() {
               <h3 className="font-bold text-sm" style={{ color: 'var(--color-text)' }}>
                 Fördelning projekt och svenska partners per län
               </h3>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                Ett projekt kan ha partners i flera län och räknas då flera gånger.
+              </p>
             </div>
             <div className="overflow-auto" style={{ maxHeight: 700 }}>
               <NutsTable rows={filtered} mode={mapMode} />
