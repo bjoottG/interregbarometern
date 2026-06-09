@@ -11,6 +11,7 @@ type SortKey = keyof Projekt | null;
 type SortDir = 'asc' | 'desc';
 
 const COLS: { key: keyof Projekt; label: string; numeric?: boolean }[] = [
+  { key: 'strand_kod', label: 'Kat.' },
   { key: 'program', label: 'Program' },
   { key: 'specifiktmal', label: 'Specifikt mål' },
   { key: 'projekttyp', label: 'Projekttyp' },
@@ -80,7 +81,7 @@ export default function ProjectTable({ rows }: Props) {
             </tr>
             {/* Totalrad */}
             <tr className="border-b" style={{ borderColor: 'var(--color-border)', background: 'var(--color-kpi-bg)' }}>
-              <td className="py-2 px-2 font-semibold" style={{ color: 'var(--color-primary)' }} colSpan={9}>
+              <td className="py-2 px-2 font-semibold" style={{ color: 'var(--color-primary)' }} colSpan={10}>
                 Totaler ({formatNumber(rows.length)} rader)
               </td>
               <td className="py-2 px-2 font-semibold text-right font-mono" style={{ color: 'var(--color-primary)' }}>
@@ -95,6 +96,7 @@ export default function ProjectTable({ rows }: Props) {
                 className="border-b last:border-0 hover:bg-gray-50"
                 style={{ borderColor: 'var(--color-border)' }}
               >
+                <td className="py-1.5 px-2 font-semibold" style={{ color: 'var(--color-primary)' }}>{row.strand_kod}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.program}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.specifiktmal}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.projekttyp}</td>
