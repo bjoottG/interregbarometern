@@ -4,8 +4,10 @@ import { useState, useMemo } from 'react';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import FilterBar from '@/components/FilterBar';
+import KPICard from '@/components/KPICard';
 import ProjectTable from '@/components/ProjectTable';
 import { useFilters } from '@/context/FilterContext';
+import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber, formatBudget } from '@/lib/dataUtils';
 
 export default function TabellPage() {
   const { filtered, isLoading } = useFilters();
@@ -87,6 +89,11 @@ export default function TabellPage() {
       </div>
 
       <main className="px-6 py-5">
+        <div className="grid grid-cols-3 gap-4 mb-5">
+          <KPICard title="Antal projekt" value={`${formatNumber(kpiAntalProjekt(rows))} st`} />
+          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(rows))} />
+          <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(rows))} st`} />
+        </div>
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
           <ProjectTable rows={rows} />
         </div>
