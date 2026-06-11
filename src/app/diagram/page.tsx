@@ -377,7 +377,7 @@ export default function DiagramPage() {
             <ResponsiveContainer width="100%" height={240}>
               <BarChart layout="vertical" data={perPolitisktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
-                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)} MEUR`} />
+                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)} M€`} />
                 <YAxis type="category" dataKey="name" width={40} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
                 <Bar dataKey="budget" fill={DIAGRAM_COLORS[2]} radius={[0, 3, 3, 0]} maxBarSize={22} />
@@ -389,7 +389,7 @@ export default function DiagramPage() {
             <ResponsiveContainer width="100%" height={420}>
               <BarChart layout="vertical" data={perSpecifiktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
                 <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
-                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)} MEUR`} />
+                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)} M€`} />
                 <YAxis type="category" dataKey="name" width={55} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE}
                   formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']}

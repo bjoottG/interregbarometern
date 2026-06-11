@@ -37,7 +37,7 @@ export default function BudgetBarChart({ rows, field, title }: Props) {
           />
           <YAxis hide />
           <Tooltip
-            formatter={(v) => [`${(Number(v) / 1_000_000).toFixed(1)} MEUR`, 'Budget']}
+            formatter={(v) => [`${(Number(v) / 1_000_000).toFixed(1)} M€`, 'Budget']}
             labelStyle={{ fontWeight: 700 }}
           />
           <Bar dataKey="budget" radius={[4, 4, 0, 0]} maxBarSize={60}>

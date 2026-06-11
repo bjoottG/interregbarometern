@@ -7,7 +7,7 @@ export function formatNumber(n: number): string {
 }
 
 export function formatBudget(n: number): string {
-  return `${formatNumber(Math.round(n))} EUR`;
+  return `${formatNumber(Math.round(n))} €`;
 }
 
 // ─── KPI-beräkningar ────────────────────────────────────────────────────────
