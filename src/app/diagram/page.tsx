@@ -4,8 +4,9 @@ import { useMemo } from 'react';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import FilterBar from '@/components/FilterBar';
+import KPICard from '@/components/KPICard';
 import { useFilters } from '@/context/FilterContext';
-import { groupBy, formatBudget } from '@/lib/dataUtils';
+import { groupBy, formatBudget, kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber } from '@/lib/dataUtils';
 import { DIAGRAM_COLORS, ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER, mapOrgTyp } from '@/types';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -191,20 +192,16 @@ export default function DiagramPage() {
       <main className="max-w-[1200px] mx-auto px-6 py-5 flex flex-col gap-5">
 
         {/* Topp-sektion */}
+        {/* KPI-rad */}
+        <div className="grid grid-cols-3 gap-4">
+          <KPICard title="Antal projekt" value={`${formatNumber(kpiAntalProjekt(filtered))} st`} href="/tabell" />
+          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(filtered))} />
+          <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(filtered))} st`} href="/tabell" />
+        </div>
+
         <div className="grid grid-cols-2 gap-5">
-          {/* KPI-boxar + tabeller */}
+          {/* Tabeller */}
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: 'Antal unika organisationer', value: unikaOrg },
-                { label: 'Antal unika projekt', value: unikaProjekt },
-              ].map(({ label, value }) => (
-                <div key={label} className="rounded-xl p-5 text-center" style={{ background: '#E8E4F5' }}>
-                  <p className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>{label}</p>
-                  <p className="text-3xl font-bold" style={{ color: 'var(--color-primary)' }}>{value}</p>
-                </div>
-              ))}
-            </div>
 
             {/* Tre största projekten */}
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
