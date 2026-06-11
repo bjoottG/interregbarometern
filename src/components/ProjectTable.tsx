@@ -15,7 +15,7 @@ const COLS: { key: keyof Projekt; label: string; numeric?: boolean }[] = [
   { key: 'projekttyp', label: 'Projekttyp' },
   { key: 'organisationsnamn', label: 'Partner/Organisation' },
   { key: 'organisationstyp', label: 'Org. typ' },
-  { key: 'organisationsagande', label: 'Privat/Publik' },
+  { key: 'organisationsagande', label: 'Org. ägare' },
   { key: 'organisationsroll', label: 'Roll' },
   { key: 'specifiktmal', label: 'Specifikt mål' },
   { key: 'strand_kod', label: 'Kat.' },
