@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { formatBudget, formatNumber, kpiTotalBudget } from '@/lib/dataUtils';
+import { formatBudget, formatNumber } from '@/lib/dataUtils';
 import { ROLL_LABELS } from '@/types';
 import type { Projekt } from '@/types';
 
@@ -57,8 +57,6 @@ export default function ProjectTable({ rows }: Props) {
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
   const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const totalBudget = kpiTotalBudget(rows);
-
   function SortIcon(_: { col: keyof Projekt }) { return null; }
 
   return (
@@ -78,15 +76,6 @@ export default function ProjectTable({ rows }: Props) {
                   <SortIcon col={col.key} />
                 </th>
               ))}
-            </tr>
-            {/* Totalrad */}
-            <tr className="border-b" style={{ borderColor: 'var(--color-border)', background: 'var(--color-kpi-bg)' }}>
-              <td className="py-2 px-2 font-semibold" style={{ color: 'var(--color-primary)' }} colSpan={10}>
-                Totaler ({formatNumber(rows.length)} rader)
-              </td>
-              <td className="py-2 px-2 font-semibold text-right font-mono" style={{ color: 'var(--color-primary)' }}>
-                {formatBudget(totalBudget)}
-              </td>
             </tr>
           </thead>
           <tbody>
