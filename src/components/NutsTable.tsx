@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { Projekt } from '@/types';
-import { formatNumber } from '@/lib/dataUtils';
+import { formatNumber, formatBudget } from '@/lib/dataUtils';
 import { useFilters } from '@/context/FilterContext';
 
 interface Props {
@@ -101,7 +101,7 @@ export default function NutsTable({ rows, mode }: Props) {
                 <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.projekt)}</td>
                 <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.partners)}</td>
                 <td className="py-1.5 pr-3 text-right font-mono" style={{ color: 'var(--color-text)', fontSize: 11 }}>
-                  {row.budget > 0 ? formatNumber(Math.round(row.budget)) : '–'}
+                  {row.budget > 0 ? formatBudget(row.budget) : '–'}
                 </td>
               </tr>
             );
