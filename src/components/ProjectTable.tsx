@@ -82,8 +82,13 @@ export default function ProjectTable({ rows }: Props) {
             {pageRows.map((row, i) => (
               <tr
                 key={`${row.id}-${i}`}
-                className="border-b last:border-0 hover:bg-gray-50"
-                style={{ borderColor: 'var(--color-border)' }}
+                className="border-b last:border-0"
+                style={{
+                  borderColor: 'var(--color-border)',
+                  background: i % 2 === 0 ? 'white' : 'var(--color-kpi-bg)',
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#e8e4f5'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? 'white' : 'var(--color-kpi-bg)'; }}
               >
                 <td className="py-1.5 px-2 max-w-[180px] truncate" style={{ color: 'var(--color-text)' }} title={row.projektnamn}>{row.projektnamn}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.projekttyp}</td>

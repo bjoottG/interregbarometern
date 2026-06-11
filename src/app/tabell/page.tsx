@@ -39,12 +39,12 @@ export default function TabellPage() {
   return (
     <>
       <Header />
-      <Navigation alignLeft />
-      <FilterBar alignLeft />
+      <Navigation />
+      <FilterBar />
 
       {/* Sökfält */}
       <div className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
-        <div className="px-6 py-3 flex items-end gap-3">
+        <div className="max-w-[1400px] mx-auto px-6 py-3 flex items-end gap-3">
           <div className="flex flex-col gap-1 flex-1 max-w-md">
             <label className="text-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>
               Sök Partner/Organisation
@@ -88,7 +88,7 @@ export default function TabellPage() {
         </div>
       </div>
 
-      <main className="px-6 py-5">
+      <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="grid grid-cols-3 gap-4 mb-5">
           <KPICard title="Antal projekt" value={`${formatNumber(kpiAntalProjekt(rows))} st`} />
           <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(rows))} />
