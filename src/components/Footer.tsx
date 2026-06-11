@@ -6,6 +6,15 @@ function ExternalIcon() {
   );
 }
 
+function MailIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block ml-1.5 flex-shrink-0" style={{ verticalAlign: 'middle' }}>
+      <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" strokeWidth="1.8"/>
+      <path d="M2 7l10 7 10-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="mt-12 pb-8 px-6">
@@ -65,7 +74,7 @@ export default function Footer() {
                   style={{ color: '#1D1D1B' }}
                 >
                   Mattias Assmundson
-                  <ExternalIcon />
+                  <MailIcon />
                 </a>
               </li>
               <li>
@@ -75,7 +84,7 @@ export default function Footer() {
                   style={{ color: '#1D1D1B' }}
                 >
                   Robert Berggren
-                  <ExternalIcon />
+                  <MailIcon />
                 </a>
               </li>
             </ul>
