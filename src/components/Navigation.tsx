@@ -9,12 +9,12 @@ const tabs = [
   { label: 'Partners', href: '/tabell' },
 ];
 
-export default function Navigation() {
+export default function Navigation({ alignLeft }: { alignLeft?: boolean }) {
   const pathname = usePathname();
 
   return (
     <nav className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
-      <div className="max-w-[1200px] mx-auto px-6 flex gap-0">
+      <div className={`${alignLeft ? '' : 'max-w-[1200px] mx-auto'} px-6 flex gap-0`}>
         {tabs.map((tab) => {
           const active = pathname === tab.href;
           return (

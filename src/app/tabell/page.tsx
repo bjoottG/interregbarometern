@@ -37,12 +37,12 @@ export default function TabellPage() {
   return (
     <>
       <Header />
-      <Navigation />
-      <FilterBar />
+      <Navigation alignLeft />
+      <FilterBar alignLeft />
 
       {/* Sökfält */}
       <div className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
-        <div className="max-w-[1400px] mx-auto px-6 py-3 flex items-end gap-3">
+        <div className="px-6 py-3 flex items-end gap-3">
           <div className="flex flex-col gap-1 flex-1 max-w-md">
             <label className="text-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>
               Sök Partner/Organisation
@@ -86,7 +86,7 @@ export default function TabellPage() {
         </div>
       </div>
 
-      <main className="max-w-[1400px] mx-auto px-6 py-5">
+      <main className="px-6 py-5">
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
           <ProjectTable rows={rows} />
         </div>

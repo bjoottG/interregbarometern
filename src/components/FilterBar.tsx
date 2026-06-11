@@ -8,7 +8,7 @@ import {
   ORG_ROLLER, ROLL_LABELS, ROLL_DESCRIPTIONS, ORG_TYPER_DISPLAY, STRAND_VALUES,
 } from '@/types';
 
-export default function FilterBar() {
+export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
   const { filters, setFilter, resetFilters } = useFilters();
 
   const hasFilters =
@@ -23,7 +23,7 @@ export default function FilterBar() {
 
   return (
     <div className="border-b" style={{ borderColor: 'var(--color-border)', background: '#EEEAF6' }}>
-      <div className="max-w-[1200px] mx-auto px-6 py-4">
+      <div className={`${alignLeft ? '' : 'max-w-[1200px] mx-auto'} px-6 py-4`}>
         <div className="grid grid-cols-4 gap-3">
           <MultiSelectDropdown
             label="NUTS 3 (Län)"
