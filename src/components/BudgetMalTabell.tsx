@@ -101,7 +101,7 @@ export default function BudgetMalTabell({ rows }: Props) {
                 onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = '#f9f9f9'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = isActive ? 'var(--color-kpi-bg)' : ''; }}
               >
-                <td className="py-2 pr-3 font-semibold" style={{ color: isActive ? 'var(--color-primary)' : d.color }}>
+                <td className="py-2 pr-3 font-semibold" style={{ color: isActive ? 'var(--color-primary)' : 'var(--color-text)' }}>
                   {isActive && <span className="mr-1 text-xs">✓</span>}
                   {d.name}
                 </td>
