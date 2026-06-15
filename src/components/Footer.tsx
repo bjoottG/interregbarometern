@@ -1,3 +1,9 @@
+'use client';
+
+function mailHref(user: string, domain: string) {
+  return `mailto:${user}@${domain}`;
+}
+
 function ExternalIcon() {
   return (
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block ml-1 flex-shrink-0" style={{ verticalAlign: 'middle' }}>
@@ -69,7 +75,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-2">
               <li>
                 <a
-                  href="mailto:Mattias.Assmundson@tillvaxtverket.se"
+                  href={mailHref('Mattias.Assmundson', 'tillvaxtverket.se')}
                   className="text-sm underline inline-flex items-center"
                   style={{ color: '#1D1D1B' }}
                 >
@@ -79,7 +85,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:Robert.Berggren@tillvaxtverket.se"
+                  href={mailHref('Robert.Berggren', 'tillvaxtverket.se')}
                   className="text-sm underline inline-flex items-center"
                   style={{ color: '#1D1D1B' }}
                 >

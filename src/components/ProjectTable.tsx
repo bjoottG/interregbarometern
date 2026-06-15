@@ -11,15 +11,15 @@ type SortKey = keyof Projekt | null;
 type SortDir = 'asc' | 'desc';
 
 const COLS: { key: keyof Projekt; label: string; numeric?: boolean }[] = [
-  { key: 'projektnamn', label: 'Projektnamn' },
-  { key: 'projekttyp', label: 'Projekttyp' },
-  { key: 'organisationsnamn', label: 'Partner/Organisation' },
-  { key: 'organisationstyp', label: 'Org. typ' },
-  { key: 'organisationsagande', label: 'Org. ägare' },
-  { key: 'organisationsroll', label: 'Roll' },
-  { key: 'specifiktmal', label: 'Specifikt mål' },
   { key: 'strand_kod', label: 'Kat.' },
   { key: 'program', label: 'Program' },
+  { key: 'projektnamn', label: 'Projektnamn' },
+  { key: 'projekttyp', label: 'Projekttyp' },
+  { key: 'specifiktmal', label: 'Specifikt mål' },
+  { key: 'organisationsnamn', label: 'Partner/Organisation' },
+  { key: 'organisationsagande', label: 'Privat/Publik' },
+  { key: 'organisationstyp', label: 'Org. typ' },
+  { key: 'organisationsroll', label: 'Roll' },
   { key: 'nuts3', label: 'Nuts3' },
   { key: 'partnerbudget', label: 'EU-medel (ERDF)', numeric: true },
 ];
@@ -90,15 +90,15 @@ export default function ProjectTable({ rows }: Props) {
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#e8e4f5'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? 'white' : 'var(--color-kpi-bg)'; }}
               >
-                <td className="py-1.5 px-2 max-w-[180px] truncate" style={{ color: 'var(--color-text)' }} title={row.projektnamn}>{row.projektnamn}</td>
-                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.projekttyp}</td>
-                <td className="py-1.5 px-2 max-w-[150px] truncate" style={{ color: 'var(--color-text)' }} title={row.organisationsnamn}>{row.organisationsnamn}</td>
-                <td className="py-1.5 px-2 max-w-[140px] truncate" style={{ color: 'var(--color-text)' }} title={row.organisationstyp}>{row.organisationstyp}</td>
-                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.organisationsagande}</td>
-                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{ROLL_LABELS[row.organisationsroll] ?? row.organisationsroll}</td>
-                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.specifiktmal}</td>
                 <td className="py-1.5 px-2 font-semibold" style={{ color: 'var(--color-primary)' }}>{row.strand_kod}</td>
                 <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.program}</td>
+                <td className="py-1.5 px-2 max-w-[180px] truncate" style={{ color: 'var(--color-text)' }} title={row.projektnamn}>{row.projektnamn}</td>
+                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.projekttyp}</td>
+                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.specifiktmal}</td>
+                <td className="py-1.5 px-2 max-w-[150px] truncate" style={{ color: 'var(--color-text)' }} title={row.organisationsnamn}>{row.organisationsnamn}</td>
+                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{row.organisationsagande}</td>
+                <td className="py-1.5 px-2 max-w-[140px] truncate" style={{ color: 'var(--color-text)' }} title={row.organisationstyp}>{row.organisationstyp}</td>
+                <td className="py-1.5 px-2" style={{ color: 'var(--color-text)' }}>{ROLL_LABELS[row.organisationsroll] ?? row.organisationsroll}</td>
                 <td className="py-1.5 px-2 whitespace-nowrap" style={{ color: 'var(--color-text)' }}>{row.nuts3}</td>
                 <td className="py-1.5 px-2 text-right font-mono" style={{ color: 'var(--color-primary)' }}>
                   {formatBudget(row.partnerbudget)}
