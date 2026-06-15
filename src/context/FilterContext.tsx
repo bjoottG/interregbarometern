@@ -35,7 +35,17 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     fetch('/data/rawdata.json')
       .then((r) => { if (!r.ok) throw new Error('Kunde inte hämta rawdata.json'); return r.json(); })
-      .then((json) => { setData(json as Projekt[]); setIsLoading(false); })
+      .then((json: Projekt[]) => {
+        const complete = json.filter(r =>
+          !!r.organisationsnamn &&
+          !!r.organisationstyp &&
+          !!r.nuts3 &&
+          !!r.politisktmal &&
+          !!r.specifiktmal
+        );
+        setData(complete);
+        setIsLoading(false);
+      })
       .catch((e: Error) => { setError(e.message); setIsLoading(false); });
   }, []);
 
