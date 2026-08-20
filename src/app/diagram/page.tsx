@@ -10,7 +10,7 @@ import { useFilters } from '@/context/FilterContext';
 import { groupBy, formatBudget, kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber } from '@/lib/dataUtils';
 import { ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER, POLITISKT_MAL_DEFINITIONER, mapOrgTyp } from '@/types';
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, Treemap, CartesianGrid, LabelList,
 } from 'recharts';
 
@@ -60,8 +60,6 @@ function ChartCard({ title, subtitle, pdf, children }: { title: string; subtitle
     </div>
   );
 }
-
-const TOOLTIP_STYLE = { fontSize: 11, borderRadius: 8 };
 
 export default function DiagramPage() {
   const { filtered, isLoading } = useFilters();
@@ -290,7 +288,6 @@ export default function DiagramPage() {
                     <Pie data={perRoll} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={65} innerRadius={32}>
                       {perRoll.map((d) => <Cell key={d.key} fill={ROLE_COLORS[d.key] ?? '#ccc'} />)}
                     </Pie>
-                    <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`]} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="flex flex-col gap-2 text-sm">
@@ -324,11 +321,6 @@ export default function DiagramPage() {
                     tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   />
                   <YAxis type="category" dataKey="kod" hide />
-                  <Tooltip
-                    contentStyle={TOOLTIP_STYLE}
-                    formatter={(v) => [`${v} st`, 'Partners']}
-                    labelFormatter={(l) => perStrand.find(d => d.kod === l)?.name ?? l}
-                  />
                   <Bar dataKey="value" maxBarSize={26}>
                     {perStrand.map(d => <Cell key={d.kod} fill={STRAND_COLORS[d.kod] ?? BAR_COLOR} />)}
                     <LabelList dataKey="value" position="center" fill="#fff" fontSize={11} />
@@ -351,7 +343,6 @@ export default function DiagramPage() {
                 tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
               />
               <YAxis type="category" dataKey="name" width={210} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
-              <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
               <Bar dataKey="antalPartners" fill={BAR_COLOR} maxBarSize={18} />
             </BarChart>
           </ResponsiveContainer>
@@ -395,7 +386,6 @@ export default function DiagramPage() {
                 );
               }}
             >
-              <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v, _, props) => [`${v} st`, `${props.payload?.orgTyp ?? ''} – ${ROLL_LABELS[props.payload?.roll ?? ''] ?? props.payload?.roll ?? ''}`]} />
             </Treemap>
           </ResponsiveContainer>
         </ChartCard>
@@ -418,7 +408,6 @@ export default function DiagramPage() {
                 tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
               />
               <YAxis type="category" dataKey="name" width={lanYWidth} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
-              <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Antal projektpartners']} />
               <Bar dataKey="value" fill={BAR_COLOR} maxBarSize={16} />
             </BarChart>
           </ResponsiveContainer>
@@ -442,7 +431,6 @@ export default function DiagramPage() {
                   tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   tickFormatter={(v) => formatBudget(Number(v))} />
                 <YAxis type="category" dataKey="name" width={230} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
-                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
                 <Bar dataKey="budget" fill="#7B4FBC" maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
@@ -464,7 +452,6 @@ export default function DiagramPage() {
                   tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
                   tickFormatter={(v) => formatBudget(Number(v))} />
                 <YAxis type="category" dataKey="name" width={330} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
-                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
                 <Bar dataKey="budget" fill="#2FA39B" maxBarSize={14} />
               </BarChart>
             </ResponsiveContainer>
