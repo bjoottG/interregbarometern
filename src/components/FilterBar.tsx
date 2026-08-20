@@ -32,17 +32,17 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
             onChange={(v) => setFilter('nuts3', v)}
           />
           <MultiSelectDropdown
-            label="Politiskt mål"
-            options={POLITISKA_MAL}
-            selected={filters.politisktmal}
-            onChange={(v) => setFilter('politisktmal', v)}
-            getDescription={(v) => POLITISKT_MAL_DEFINITIONER[v] ?? ''}
+            label="Program"
+            options={PROGRAMS}
+            selected={filters.program}
+            onChange={(v) => setFilter('program', v)}
           />
           <MultiSelectDropdown
-            label="Pågående Projekt"
-            options={PAGAENDE_STATUS}
-            selected={filters.pagaende}
-            onChange={(v) => setFilter('pagaende', v)}
+            label="Specifikt mål"
+            options={SPECIFIKA_MAL}
+            selected={filters.specifiktmal}
+            onChange={(v) => setFilter('specifiktmal', v)}
+            getDescription={(v) => SPECIFIKT_MAL_DEFINITIONER[v] ?? ''}
           />
           <MultiSelectDropdown
             label="Partnerroll"
@@ -59,20 +59,20 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
             onChange={(v) => setFilter('strand', v)}
           />
           <MultiSelectDropdown
-            label="Program"
-            options={PROGRAMS}
-            selected={filters.program}
-            onChange={(v) => setFilter('program', v)}
+            label="Politiskt mål"
+            options={POLITISKA_MAL}
+            selected={filters.politisktmal}
+            onChange={(v) => setFilter('politisktmal', v)}
+            getDescription={(v) => POLITISKT_MAL_DEFINITIONER[v] ?? ''}
           />
           <MultiSelectDropdown
-            label="Specifikt mål"
-            options={SPECIFIKA_MAL}
-            selected={filters.specifiktmal}
-            onChange={(v) => setFilter('specifiktmal', v)}
-            getDescription={(v) => SPECIFIKT_MAL_DEFINITIONER[v] ?? ''}
+            label="Projekt status"
+            options={PAGAENDE_STATUS}
+            selected={filters.pagaende}
+            onChange={(v) => setFilter('pagaende', v)}
           />
           <MultiSelectDropdown
-            label="Organisationstyp"
+            label="Organisation typ"
             options={ORG_TYPER_DISPLAY}
             selected={filters.organisationstyp}
             onChange={(v) => setFilter('organisationstyp', v)}
@@ -87,7 +87,7 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
                 background: 'white',
               }}
             >
-              Återställ filter
+              Återställ
             </button>
           </div>
         </div>
