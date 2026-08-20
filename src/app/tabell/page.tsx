@@ -91,7 +91,7 @@ export default function TabellPage() {
 
       <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="grid grid-cols-3 gap-4 mb-5">
-          <KPICard title="Antal projekt" value={`${formatNumber(kpiAntalProjekt(rows))} st`} />
+          <KPICard title="Antal unika projekt" value={`${formatNumber(kpiAntalProjekt(rows))} st`} />
           <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(rows))} />
           <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(rows))} st`} />
         </div>

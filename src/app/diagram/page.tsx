@@ -198,7 +198,7 @@ export default function DiagramPage() {
         {/* Topp-sektion */}
         {/* KPI-rad */}
         <div className="grid grid-cols-3 gap-4">
-          <KPICard title="Antal projekt" value={`${formatNumber(kpiAntalProjekt(filtered))} st`} href="/tabell" />
+          <KPICard title="Antal unika projekt" value={`${formatNumber(kpiAntalProjekt(filtered))} st`} href="/tabell" />
           <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(filtered))} />
           <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(filtered))} st`} href="/tabell" />
         </div>
@@ -224,14 +224,6 @@ export default function DiagramPage() {
                     </tr>
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr className="border-t-2" style={{ borderColor: 'var(--color-border)' }}>
-                    <td className="py-1.5 font-bold" style={{ color: 'var(--color-text)' }}>Summa</td>
-                    <td className="py-1.5 text-right font-bold font-mono" style={{ color: 'var(--color-primary)' }}>
-                      {formatBudget(toppProjekt.reduce((s, d) => s + d.budget, 0))}
-                    </td>
-                  </tr>
-                </tfoot>
               </table>
               <div className="mt-3">
                 <ExcelDownloadLink />
@@ -255,14 +247,6 @@ export default function DiagramPage() {
                     </tr>
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr className="border-t-2" style={{ borderColor: 'var(--color-border)' }}>
-                    <td className="py-1.5 font-bold" style={{ color: 'var(--color-text)' }}>Summa</td>
-                    <td className="py-1.5 text-right font-bold font-mono" style={{ color: 'var(--color-primary)' }}>
-                      {formatBudget(toppOrg.reduce((s, d) => s + d.budget, 0))}
-                    </td>
-                  </tr>
-                </tfoot>
               </table>
               <div className="mt-3">
                 <ExcelDownloadLink />

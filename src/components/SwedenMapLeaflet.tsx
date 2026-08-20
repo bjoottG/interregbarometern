@@ -28,10 +28,10 @@ function buildStats(rows: Projekt[], mode: 'nuts3' | 'nuts2') {
 }
 
 function lerpColor(t: number): string {
-  // #EEEAF5 (238,234,245) → #4A1B8B (74,27,139)
-  const r = Math.round(238 + t * (74 - 238));
-  const g = Math.round(234 + t * (27 - 234));
-  const b = Math.round(245 + t * (139 - 245));
+  // #FFFFFF (255,255,255) → #4A1B8B (74,27,139)
+  const r = Math.round(255 + t * (74 - 255));
+  const g = Math.round(255 + t * (27 - 255));
+  const b = Math.round(255 + t * (139 - 255));
   return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 }
 
@@ -40,6 +40,10 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
   const leafletRef = useRef<{ map: unknown; layer: unknown } | null>(null);
 
   const stats = useMemo(() => buildStats(rows, mode), [rows, mode]);
+  const maxProjekt = useMemo(
+    () => Math.max(...Array.from(stats.values()).map(v => v.projekt), 1),
+    [stats],
+  );
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -62,12 +66,8 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
         zoom: 5,
         zoomControl: true,
         scrollWheelZoom: false,
+        attributionControl: false,
       });
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 10,
-      }).addTo(map);
 
       const geoRes = await fetch('/data/sweden-nuts3.geojson');
       const geoData = await geoRes.json();
@@ -83,9 +83,9 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
           const t = s ? s.projekt / maxProjekt : 0;
           return {
             fillColor: lerpColor(t),
-            fillOpacity: 0.75,
-            color: '#ffffff',
-            weight: 1.5,
+            fillOpacity: 1,
+            color: '#1a1a1a',
+            weight: 1,
           };
         },
         onEachFeature: (feature, lyr) => {
@@ -104,7 +104,7 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
           lyr.bindTooltip(tooltipContent, { sticky: true, opacity: 0.95 });
 
           lyr.on('mouseover', function (this: unknown) {
-            (this as ReturnType<typeof L.geoJSON>).setStyle({ weight: 2.5, fillOpacity: 0.9 });
+            (this as ReturnType<typeof L.geoJSON>).setStyle({ weight: 2.5 });
           });
           lyr.on('mouseout', function (this: unknown) {
             layer.resetStyle(this as ReturnType<typeof L.geoJSON>);
@@ -134,25 +134,26 @@ export default function SwedenMapLeaflet({ rows, mode, onCountyClick }: Props) {
         const name = (feature?.properties as { NUTS_NAME?: string })?.NUTS_NAME ?? '';
         const s = stats.get(name);
         const t = s ? s.projekt / maxProjekt : 0;
-        return { fillColor: lerpColor(t), fillOpacity: 0.75 };
+        return { fillColor: lerpColor(t), fillOpacity: 1 };
       });
     });
   }, [stats]);
 
   return (
     <div className="relative w-full h-full min-h-[420px]">
-      <div ref={mapRef} className="w-full h-full rounded-b-xl" style={{ minHeight: 680 }} />
+      <div ref={mapRef} className="w-full h-full rounded-b-xl" style={{ minHeight: 680, background: '#fff' }} />
       {/* Legend */}
-      <div
-        className="absolute bottom-6 left-3 z-[1000] bg-white rounded-lg px-3 py-2 text-xs shadow"
-        style={{ border: '1px solid var(--color-border)' }}
-      >
-        <div className="flex items-center gap-2 mb-1">
-          <div className="h-2.5 w-20 rounded" style={{ background: 'linear-gradient(to right, #EEEAF5, #4A1B8B)' }} />
-        </div>
-        <div className="flex justify-between" style={{ color: 'var(--color-text-muted)' }}>
-          <span>Få projekt</span>
-          <span className="ml-4">Många</span>
+      <div className="absolute top-4 right-4 z-[1000] text-xs" style={{ color: 'var(--color-text)' }}>
+        <p className="mb-1.5 font-medium">Antal projekt</p>
+        <div className="flex items-start gap-1.5">
+          <div
+            className="w-3"
+            style={{ height: 110, background: 'linear-gradient(to top, #FFFFFF, #4A1B8B)', border: '1px solid var(--color-border)' }}
+          />
+          <div className="flex flex-col justify-between" style={{ height: 110, color: 'var(--color-text-muted)' }}>
+            <span>– {formatNumber(maxProjekt)}</span>
+            <span>– 0</span>
+          </div>
         </div>
       </div>
     </div>
