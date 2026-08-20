@@ -15,9 +15,14 @@ export default function Header() {
         <div className="w-px self-stretch" style={{ background: 'var(--color-border)' }} />
 
         {/* Title */}
-        <h1 className="text-xl font-bold" style={{ color: 'var(--color-text)' }}>
-          Svenska Partners i Interreg
-        </h1>
+        <div>
+          <h1 className="text-xl font-bold" style={{ color: 'var(--color-text)' }}>
+            Svenska Partners i Interreg
+          </h1>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+            En översikt av svenska partners i Interreg-projekt: vilka deltar, var de finns och hur EU-medlen fördelas
+          </p>
+        </div>
 
       </div>
     </header>
