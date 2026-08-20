@@ -159,21 +159,6 @@ const TERMS: Term[] = [
 
 const sorted = [...TERMS].sort((a, b) => a.term.localeCompare(b.term, 'sv'));
 
-const CATEGORIES = [...new Set(TERMS.map(t => t.category).filter(Boolean))].sort() as string[];
-
-const CATEGORY_COLORS: Record<string, string> = {
-  'Finansiering':      '#00A896',
-  'Geografi':          '#2196A8',
-  'Organisation':      '#7B4FBC',
-  'Partner':           '#4A1B8B',
-  'Partnerroll':       '#4A1B8B',
-  'Politiskt mål':     '#A855F7',
-  'Program':           '#E040FB',
-  'Programkategori':   '#7B4FBC',
-  'Projektstatus':     '#00BCD4',
-  'Specifikt mål':     '#9C27B0',
-};
-
 export default function OrdlistaPage() {
   return (
     <>
@@ -186,23 +171,6 @@ export default function OrdlistaPage() {
           <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
             Förklaringar av begrepp och termer som används i dashboarden, sorterade i bokstavsordning.
           </p>
-        </div>
-
-        {/* Kategorilegende */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {CATEGORIES.map(cat => (
-            <span
-              key={cat}
-              className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{
-                background: `${CATEGORY_COLORS[cat] ?? '#888'}22`,
-                color: CATEGORY_COLORS[cat] ?? '#888',
-                border: `1px solid ${CATEGORY_COLORS[cat] ?? '#888'}44`,
-              }}
-            >
-              {cat}
-            </span>
-          ))}
         </div>
 
         {/* Termslista */}
@@ -219,17 +187,6 @@ export default function OrdlistaPage() {
                 <p className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>
                   {item.term}
                 </p>
-                {item.category && (
-                  <span
-                    className="text-xs px-1.5 py-0.5 rounded-full font-medium mt-1 inline-block"
-                    style={{
-                      background: `${CATEGORY_COLORS[item.category] ?? '#888'}18`,
-                      color: CATEGORY_COLORS[item.category] ?? '#888',
-                    }}
-                  >
-                    {item.category}
-                  </span>
-                )}
               </div>
               <p className="text-sm flex-1 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
                 {item.definition}

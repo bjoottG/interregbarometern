@@ -6,6 +6,7 @@ import Navigation from '@/components/Navigation';
 import FilterBar from '@/components/FilterBar';
 import KPICard from '@/components/KPICard';
 import ProjectTable from '@/components/ProjectTable';
+import ExcelDownloadLink from '@/components/ExcelDownloadLink';
 import { useFilters } from '@/context/FilterContext';
 import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber, formatBudget } from '@/lib/dataUtils';
 
@@ -96,6 +97,9 @@ export default function TabellPage() {
         </div>
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
           <ProjectTable rows={rows} />
+          <div className="mt-3">
+            <ExcelDownloadLink />
+          </div>
         </div>
       </main>
     </>

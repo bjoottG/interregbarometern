@@ -10,6 +10,7 @@ import NutsTable from '@/components/NutsTable';
 import ProgramTable from '@/components/ProgramTable';
 import KrysstabellPartners from '@/components/KrysstabellPartners';
 import BudgetMalTabell from '@/components/BudgetMalTabell';
+import ExcelDownloadLink from '@/components/ExcelDownloadLink';
 import { useFilters } from '@/context/FilterContext';
 import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber, formatBudget } from '@/lib/dataUtils';
 
@@ -75,6 +76,9 @@ export default function OversiktPage() {
             <div className="overflow-auto" style={{ maxHeight: 700 }}>
               <NutsTable rows={filtered} mode={mapMode} />
             </div>
+            <div className="px-4 py-2 border-t" style={{ borderColor: 'var(--color-border)' }}>
+              <ExcelDownloadLink />
+            </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border overflow-hidden" style={{ borderColor: 'var(--color-border)' }}>
@@ -99,6 +103,9 @@ export default function OversiktPage() {
             </div>
             <div className="overflow-auto" style={{ maxHeight: 460 }}>
               <ProgramTable rows={filtered} />
+            </div>
+            <div className="px-4 py-2 border-t" style={{ borderColor: 'var(--color-border)' }}>
+              <ExcelDownloadLink />
             </div>
           </div>
           <KrysstabellPartners rows={filtered} />

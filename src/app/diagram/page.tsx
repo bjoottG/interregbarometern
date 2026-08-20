@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import FilterBar from '@/components/FilterBar';
 import KPICard from '@/components/KPICard';
+import ExcelDownloadLink from '@/components/ExcelDownloadLink';
 import { useFilters } from '@/context/FilterContext';
 import { groupBy, formatBudget, kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber } from '@/lib/dataUtils';
 import { DIAGRAM_COLORS, ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER, mapOrgTyp } from '@/types';
@@ -39,6 +40,9 @@ function ChartCard({ title, subtitle, children }: { title: string; subtitle?: st
       {subtitle && <p className="text-xs mb-3" style={{ color: 'var(--color-text-muted)' }}>{subtitle}</p>}
       {!subtitle && <div className="mb-3" />}
       {children}
+      <div className="mt-3">
+        <ExcelDownloadLink />
+      </div>
     </div>
   );
 }
@@ -229,6 +233,9 @@ export default function DiagramPage() {
                   </tr>
                 </tfoot>
               </table>
+              <div className="mt-3">
+                <ExcelDownloadLink />
+              </div>
             </div>
 
             {/* Tre största organisationerna */}
@@ -257,6 +264,9 @@ export default function DiagramPage() {
                   </tr>
                 </tfoot>
               </table>
+              <div className="mt-3">
+                <ExcelDownloadLink />
+              </div>
             </div>
           </div>
 

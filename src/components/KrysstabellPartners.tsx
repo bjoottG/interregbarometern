@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { formatNumber } from '@/lib/dataUtils';
 import { ROLL_LABELS, mapOrgTyp } from '@/types';
 import { useFilters } from '@/context/FilterContext';
+import ExcelDownloadLink from './ExcelDownloadLink';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
@@ -101,6 +102,9 @@ export default function KrysstabellPartners({ rows }: Props) {
         <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
           Organisationstyp: klicka på rad för att filtrera
         </p>
+      </div>
+      <div className="mt-2">
+        <ExcelDownloadLink />
       </div>
     </div>
   );

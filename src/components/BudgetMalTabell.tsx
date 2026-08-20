@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { groupBy, formatBudget } from '@/lib/dataUtils';
 import { DIAGRAM_COLORS, SPECIFIKT_MAL_DEFINITIONER, POLITISKT_MAL_DEFINITIONER } from '@/types';
 import { useFilters } from '@/context/FilterContext';
+import ExcelDownloadLink from './ExcelDownloadLink';
 import type { Projekt } from '@/types';
 
 interface Props { rows: Projekt[] }
@@ -130,6 +131,9 @@ export default function BudgetMalTabell({ rows }: Props) {
           </tr>
         </tfoot>
       </table>
+      <div className="mt-3">
+        <ExcelDownloadLink />
+      </div>
     </div>
   );
 }
