@@ -20,7 +20,7 @@ export default function Header() {
             Svenska Partners i Interreg
           </h1>
           <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-            En översikt av svenska partners i Interreg-projekt: vilka deltar, var de finns och hur EU-medlen fördelas
+            En översikt av svenska partners i Interreg-projekt 2021–2027: vilka deltar, var de finns och hur EU-medlen fördelas
           </p>
         </div>
 
