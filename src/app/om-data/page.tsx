@@ -2,10 +2,7 @@
 
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
-
-// Datum då data i tabeller och diagram togs ut ur källsystemet.
-// Uppdatera detta värde vid varje nytt datauttag.
-const DATAUTTAG = '9 juni 2026';
+import { DATAUTTAG } from '@/lib/site';
 
 export default function OmDataPage() {
   return (
@@ -26,14 +23,14 @@ export default function OmDataPage() {
           style={{ background: 'var(--color-kpi-bg)' }}
         >
           <p className="text-sm font-semibold" style={{ color: 'var(--color-text-muted)' }}>
-            Datauttag
+            Uppgifterna gäller per
           </p>
           <p className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
             {DATAUTTAG}
           </p>
           <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-            Samtliga uppgifter i webbplatsens tabeller och diagram avser data uttagna detta datum.
-            Förändringar som skett därefter återspeglas inte.
+            Tabellerna och diagrammen bygger på uppgifter hämtade detta datum.
+            Ändringar som skett senare syns inte på webbplatsen.
           </p>
         </div>
 
