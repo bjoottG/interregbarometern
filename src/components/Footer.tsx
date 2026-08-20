@@ -48,6 +48,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <Link href="/om-data" className="text-sm underline" style={LINK_STYLE}>
+                  Om data och ansvarsfriskrivning
+                </Link>
+              </li>
+              <li>
                 <a
                   href="https://eufonder.se/eufonder/hittaeufinansiering/interreg.6396.html"
                   target="_blank"
