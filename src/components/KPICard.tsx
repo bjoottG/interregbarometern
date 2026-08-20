@@ -14,7 +14,7 @@ export default function KPICard({ title, value, subtitle, href }: Props) {
     <Link
       href={href}
       className="font-bold leading-tight"
-      style={{ fontSize: '2rem', color: 'var(--color-primary)' }}
+      style={{ fontSize: '2rem', color: 'var(--color-primary)', textDecoration: 'underline', textUnderlineOffset: 4 }}
     >
       {value}
     </Link>
