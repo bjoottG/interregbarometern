@@ -30,7 +30,7 @@ export default function Header() {
         {/* Datauttag */}
         <Link href="/om-data" className="ml-auto text-right flex-shrink-0">
           <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-            Uppgifterna gäller per
+            Senast uppdaterad
           </p>
           <p className="text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
             {DATAUTTAG}

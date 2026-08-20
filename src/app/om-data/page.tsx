@@ -23,7 +23,7 @@ export default function OmDataPage() {
           style={{ background: 'var(--color-kpi-bg)' }}
         >
           <p className="text-sm font-semibold" style={{ color: 'var(--color-text-muted)' }}>
-            Uppgifterna gäller per
+            Senast uppdaterad
           </p>
           <p className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
             {DATAUTTAG}
