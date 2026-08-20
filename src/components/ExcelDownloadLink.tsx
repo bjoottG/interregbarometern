@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function ExcelDownloadLink({ className }: { className?: string }) {
+export default function ExcelDownloadLink({ className, label }: { className?: string; label?: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,7 +12,7 @@ export default function ExcelDownloadLink({ className }: { className?: string })
         className={`text-xs underline ${className ?? ''}`}
         style={{ color: 'var(--color-primary)' }}
       >
-        Ladda ner excel
+        {label ?? 'Ladda ner excel'}
       </button>
 
       {open && (
@@ -29,7 +29,7 @@ export default function ExcelDownloadLink({ className }: { className?: string })
               Ingår inte i prototypen
             </h4>
             <p className="text-xs mb-4" style={{ color: 'var(--color-text-muted)' }}>
-              Excel-nedladdning är inte tillgänglig i denna prototyp.
+              Nedladdning är inte tillgänglig i denna prototyp.
             </p>
             <button
               onClick={() => setOpen(false)}

@@ -8,10 +8,10 @@ import KPICard from '@/components/KPICard';
 import ExcelDownloadLink from '@/components/ExcelDownloadLink';
 import { useFilters } from '@/context/FilterContext';
 import { groupBy, formatBudget, kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber } from '@/lib/dataUtils';
-import { DIAGRAM_COLORS, ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER, mapOrgTyp } from '@/types';
+import { ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER, POLITISKT_MAL_DEFINITIONER, mapOrgTyp } from '@/types';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend, Treemap,
+  PieChart, Pie, Cell, Legend, Treemap, CartesianGrid, LabelList,
 } from 'recharts';
 
 const ROLE_COLORS: Record<string, string> = {
@@ -19,6 +19,19 @@ const ROLE_COLORS: Record<string, string> = {
   PP: '#4A1B8B',
   AP: '#7B4FBC',
 };
+
+const BAR_COLOR = '#1D5C63';
+
+const STRAND_COLORS: Record<string, string> = {
+  A: '#1D5C63',
+  B: '#45B0A8',
+  C: '#7B4FBC',
+};
+
+function axisTicks(max: number, step: number): number[] {
+  const top = Math.ceil(Math.max(max, 1) / step) * step;
+  return Array.from({ length: top / step + 1 }, (_, i) => i * step);
+}
 
 const MAX_LABEL = 24;
 function TruncatedTick({ x, y, payload }: {
@@ -33,15 +46,16 @@ function TruncatedTick({ x, y, payload }: {
   );
 }
 
-function ChartCard({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
+function ChartCard({ title, subtitle, pdf, children }: { title: string; subtitle?: string; pdf?: boolean; children: React.ReactNode }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
       <h3 className="font-bold text-sm mb-1" style={{ color: 'var(--color-text)' }}>{title}</h3>
       {subtitle && <p className="text-xs mb-3" style={{ color: 'var(--color-text-muted)' }}>{subtitle}</p>}
       {!subtitle && <div className="mb-3" />}
       {children}
-      <div className="mt-3">
+      <div className="mt-3 flex gap-8">
         <ExcelDownloadLink />
+        {pdf && <ExcelDownloadLink label="Ladda ner pdf" />}
       </div>
     </div>
   );
@@ -60,14 +74,15 @@ export default function DiagramPage() {
 
   /* ── Partners per programkategori ── */
   const perStrand = useMemo(() => {
-    const map = new Map<string, number>();
+    const map = new Map<string, { namn: string; value: number }>();
     for (const r of filtered) {
-      const k = `${r.strand_kod} – ${r.strand_namn}`;
-      map.set(k, (map.get(k) ?? 0) + 1);
+      const kod = r.strand_kod;
+      if (!map.has(kod)) map.set(kod, { namn: r.strand_namn, value: 0 });
+      map.get(kod)!.value += 1;
     }
     return [...map.entries()]
-      .map(([name, value]) => ({ name, value }))
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .map(([kod, v]) => ({ kod, name: `${kod} – ${v.namn}`, value: v.value }))
+      .sort((a, b) => a.kod.localeCompare(b.kod));
   }, [filtered]);
 
   /* ── Partners per organisationstyp ── */
@@ -100,15 +115,21 @@ export default function DiagramPage() {
   /* ── EU-medel (ERDF) per specifikt mål ── */
   const perSpecifiktmal = useMemo(() =>
     groupBy(filtered, 'specifiktmal')
-      .sort((a, b) => a.name.localeCompare(b.name, 'sv', { numeric: true }))
-      .map(d => ({ name: d.name, budget: d.budget, def: SPECIFIKT_MAL_DEFINITIONER[d.name] ?? d.name })),
+      .sort((a, b) => b.budget - a.budget)
+      .map(d => ({
+        name: SPECIFIKT_MAL_DEFINITIONER[d.name] ? `${d.name} ${SPECIFIKT_MAL_DEFINITIONER[d.name]}` : d.name,
+        budget: d.budget,
+      })),
   [filtered]);
 
   /* ── EU-medel (ERDF) per politiskt mål ── */
   const perPolitisktmal = useMemo(() =>
     groupBy(filtered, 'politisktmal')
-      .sort((a, b) => a.name.localeCompare(b.name, 'sv', { numeric: true }))
-      .map(d => ({ name: d.name, budget: d.budget })),
+      .sort((a, b) => b.budget - a.budget)
+      .map(d => ({
+        name: POLITISKT_MAL_DEFINITIONER?.[d.name] ? `${d.name} ${POLITISKT_MAL_DEFINITIONER[d.name]}` : d.name,
+        budget: d.budget,
+      })),
   [filtered]);
 
   /* ── Topp-sektion KPIs ── */
@@ -209,11 +230,14 @@ export default function DiagramPage() {
 
             {/* Tre största projekten */}
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
+              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De tre största projekten</h3>
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text-muted)' }}>Tre största projekten</th>
-                    <th className="text-right py-1.5 font-semibold whitespace-nowrap" style={{ color: 'var(--color-text-muted)' }}>EU-medel (ERDF)</th>
+                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totaler</th>
+                    <th className="text-right py-1.5 font-semibold whitespace-nowrap font-mono" style={{ color: 'var(--color-text-muted)' }}>
+                      {formatBudget(toppProjekt.reduce((s, d) => s + d.budget, 0))}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -232,11 +256,14 @@ export default function DiagramPage() {
 
             {/* Tre största organisationerna */}
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
+              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De tre största organisationerna</h3>
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text-muted)' }}>Tre största organisationerna</th>
-                    <th className="text-right py-1.5 font-semibold whitespace-nowrap" style={{ color: 'var(--color-text-muted)' }}>EU-medel (ERDF)</th>
+                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totaler</th>
+                    <th className="text-right py-1.5 font-semibold whitespace-nowrap font-mono" style={{ color: 'var(--color-text-muted)' }}>
+                      {formatBudget(toppOrg.reduce((s, d) => s + d.budget, 0))}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -278,14 +305,33 @@ export default function DiagramPage() {
               </div>
             </ChartCard>
 
-            <ChartCard title="Antal partners per programkategori">
-              <ResponsiveContainer width="100%" height={120}>
-                <BarChart layout="vertical" data={perStrand} margin={{ left: 4, right: 50, top: 0, bottom: 0 }}>
-                  <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
-                  <YAxis type="category" dataKey="name" width={175} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
-                  <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
-                  <Bar dataKey="value" radius={[0, 3, 3, 0]} maxBarSize={22}>
-                    {perStrand.map((_, i) => <Cell key={i} fill={DIAGRAM_COLORS[i % DIAGRAM_COLORS.length]} />)}
+            <ChartCard title="Antal partners per programkategori" pdf>
+              <div className="flex justify-center gap-4 mb-2">
+                {perStrand.map(d => (
+                  <div key={d.kod} className="flex items-center gap-1.5 text-xs">
+                    <div className="w-3 h-3" style={{ background: STRAND_COLORS[d.kod] ?? BAR_COLOR }} />
+                    <span style={{ color: 'var(--color-text)' }}>{d.kod}</span>
+                  </div>
+                ))}
+              </div>
+              <ResponsiveContainer width="100%" height={140}>
+                <BarChart layout="vertical" data={perStrand} margin={{ left: 4, right: 10, top: 0, bottom: 0 }}>
+                  <CartesianGrid horizontal={false} stroke="var(--color-border)" />
+                  <XAxis
+                    type="number"
+                    domain={[0, axisTicks(Math.max(...perStrand.map(d => d.value), 1), 50).at(-1)!]}
+                    ticks={axisTicks(Math.max(...perStrand.map(d => d.value), 1), 50)}
+                    tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
+                  />
+                  <YAxis type="category" dataKey="kod" hide />
+                  <Tooltip
+                    contentStyle={TOOLTIP_STYLE}
+                    formatter={(v) => [`${v} st`, 'Partners']}
+                    labelFormatter={(l) => perStrand.find(d => d.kod === l)?.name ?? l}
+                  />
+                  <Bar dataKey="value" maxBarSize={26}>
+                    {perStrand.map(d => <Cell key={d.kod} fill={STRAND_COLORS[d.kod] ?? BAR_COLOR} />)}
+                    <LabelList dataKey="value" position="center" fill="#fff" fontSize={11} />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -294,24 +340,25 @@ export default function DiagramPage() {
         </div>
 
         {/* Rad 1: Program */}
-        <ChartCard title="Antal partners per program">
+        <ChartCard title="Antal partners per program" pdf>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart layout="vertical" data={perProgram} margin={{ left: 4, right: 60, top: 0, bottom: 0 }}>
-              <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
+            <BarChart layout="vertical" data={perProgram} margin={{ left: 4, right: 30, top: 0, bottom: 0 }}>
+              <CartesianGrid horizontal={false} stroke="var(--color-border)" />
+              <XAxis
+                type="number"
+                domain={[0, axisTicks(Math.max(...perProgram.map(d => d.antalPartners), 1), 20).at(-1)!]}
+                ticks={axisTicks(Math.max(...perProgram.map(d => d.antalPartners), 1), 20)}
+                tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
+              />
               <YAxis type="category" dataKey="name" width={210} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
               <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
-              <Bar dataKey="antalPartners" radius={[0, 3, 3, 0]} maxBarSize={18}>
-                {perProgram.map((_, i) => <Cell key={i} fill={DIAGRAM_COLORS[i % DIAGRAM_COLORS.length]} />)}
-              </Bar>
+              <Bar dataKey="antalPartners" fill={BAR_COLOR} maxBarSize={18} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
 
         {/* Rad 2: Treemap organisationstyp × roll */}
-        <ChartCard
-          title="Antal partners per organisationstyp och partnerroll"
-          subtitle="Ytan visar antal — färg visar partnerroll"
-        >
+        <ChartCard title="Antal partners per organisationstyp och partnerroll">
           <div className="flex gap-4 mb-2">
             {(['LP','PP','AP'] as const).map(r => (
               <div key={r} className="flex items-center gap-1.5 text-xs">
@@ -354,44 +401,71 @@ export default function DiagramPage() {
         </ChartCard>
 
         {/* Rad 3: Län */}
-        <ChartCard title="Antal partners per län (top 15)">
+        <ChartCard title="Antal partners per län (top 15)" pdf>
+          <div className="flex justify-center mb-2">
+            <div className="flex items-center gap-1.5 text-xs">
+              <div className="w-3 h-3" style={{ background: BAR_COLOR }} />
+              <span style={{ color: 'var(--color-text)' }}>Antal projektpartners</span>
+            </div>
+          </div>
           <ResponsiveContainer width="100%" height={340}>
-            <BarChart layout="vertical" data={perLan} margin={{ left: 4, right: 50, top: 0, bottom: 0 }}>
-              <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false} />
+            <BarChart layout="vertical" data={perLan} margin={{ left: 4, right: 30, top: 0, bottom: 0 }}>
+              <CartesianGrid horizontal={false} stroke="var(--color-border)" />
+              <XAxis
+                type="number"
+                domain={[0, axisTicks(Math.max(...perLan.map(d => d.value), 1), 20).at(-1)!]}
+                ticks={axisTicks(Math.max(...perLan.map(d => d.value), 1), 20)}
+                tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
+              />
               <YAxis type="category" dataKey="name" width={lanYWidth} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
-              <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Partners']} />
-              <Bar dataKey="value" fill={DIAGRAM_COLORS[0]} radius={[0, 3, 3, 0]} maxBarSize={16} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [`${v} st`, 'Antal projektpartners']} />
+              <Bar dataKey="value" fill={BAR_COLOR} maxBarSize={16} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
 
         {/* Rad 4: EU-medel (ERDF) per mål */}
         <div className="grid grid-cols-2 gap-5">
-          <ChartCard title="EU-medel (ERDF) per politiskt mål">
-            <ResponsiveContainer width="100%" height={240}>
-              <BarChart layout="vertical" data={perPolitisktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
-                <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
-                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)} M€`} />
-                <YAxis type="category" dataKey="name" width={40} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
+          <ChartCard title="EU-medel (ERDF) per politiskt mål" pdf>
+            <div className="flex justify-center mb-2">
+              <div className="flex items-center gap-1.5 text-xs">
+                <div className="w-3 h-3" style={{ background: '#7B4FBC' }} />
+                <span style={{ color: 'var(--color-text)' }}>EU-medel (ERDF)</span>
+              </div>
+            </div>
+            <ResponsiveContainer width="100%" height={420}>
+              <BarChart layout="vertical" data={perPolitisktmal} margin={{ left: 4, right: 20, top: 0, bottom: 0 }}>
+                <CartesianGrid horizontal={false} stroke="var(--color-border)" />
+                <XAxis type="number"
+                  domain={[0, axisTicks(Math.max(...perPolitisktmal.map(d => d.budget), 1), 40_000_000).at(-1)!]}
+                  ticks={axisTicks(Math.max(...perPolitisktmal.map(d => d.budget), 1), 40_000_000)}
+                  tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
+                  tickFormatter={(v) => formatBudget(Number(v))} />
+                <YAxis type="category" dataKey="name" width={230} tick={{ fontSize: 11 }} tickLine={false} axisLine={false} interval={0} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
-                <Bar dataKey="budget" fill={DIAGRAM_COLORS[2]} radius={[0, 3, 3, 0]} maxBarSize={22} />
+                <Bar dataKey="budget" fill="#7B4FBC" maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
 
-          <ChartCard title="EU-medel (ERDF) per specifikt mål">
+          <ChartCard title="EU-medel (ERDF) per specifikt mål" pdf>
+            <div className="flex justify-center mb-2">
+              <div className="flex items-center gap-1.5 text-xs">
+                <div className="w-3 h-3" style={{ background: '#2FA39B' }} />
+                <span style={{ color: 'var(--color-text)' }}>EU-medel (ERDF)</span>
+              </div>
+            </div>
             <ResponsiveContainer width="100%" height={420}>
-              <BarChart layout="vertical" data={perSpecifiktmal} margin={{ left: 4, right: 80, top: 0, bottom: 0 }}>
-                <XAxis type="number" tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
-                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(0)} M€`} />
-                <YAxis type="category" dataKey="name" width={55} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
-                <Tooltip contentStyle={TOOLTIP_STYLE}
-                  formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']}
-                  labelFormatter={(l) => {
-                    const d = perSpecifiktmal.find(x => x.name === l);
-                    return d?.def ?? l;
-                  }} />
-                <Bar dataKey="budget" fill={DIAGRAM_COLORS[3]} radius={[0, 3, 3, 0]} maxBarSize={12} />
+              <BarChart layout="vertical" data={perSpecifiktmal} margin={{ left: 4, right: 20, top: 0, bottom: 0 }}>
+                <CartesianGrid horizontal={false} stroke="var(--color-border)" />
+                <XAxis type="number"
+                  domain={[0, axisTicks(Math.max(...perSpecifiktmal.map(d => d.budget), 1), 40_000_000).at(-1)!]}
+                  ticks={axisTicks(Math.max(...perSpecifiktmal.map(d => d.budget), 1), 40_000_000)}
+                  tick={{ fontSize: 10 }} tickLine={false} axisLine={false}
+                  tickFormatter={(v) => formatBudget(Number(v))} />
+                <YAxis type="category" dataKey="name" width={330} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} interval={0} />
+                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [formatBudget(Number(v)), 'EU-medel (ERDF)']} />
+                <Bar dataKey="budget" fill="#2FA39B" maxBarSize={14} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
