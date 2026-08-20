@@ -32,7 +32,7 @@ export default function Header() {
           <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
             Senast uppdaterad
           </p>
-          <p className="text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
+          <p className="text-sm font-bold" style={{ color: 'var(--color-primary)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
             {DATAUTTAG}
           </p>
         </Link>
