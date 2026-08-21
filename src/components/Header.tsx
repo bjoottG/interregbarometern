@@ -35,6 +35,9 @@ export default function Header() {
           <p className="text-sm font-bold" style={{ color: 'var(--color-primary)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
             {DATAUTTAG}
           </p>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+            Om data och ansvar →
+          </p>
         </Link>
 
       </div>
