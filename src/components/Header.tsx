@@ -28,15 +28,12 @@ export default function Header() {
         </div>
 
         {/* Datauttag */}
-        <Link href="/om-data" className="ml-auto text-right flex-shrink-0">
+        <Link href="/om-statistiken" className="ml-auto text-right flex-shrink-0">
           <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
             Senast uppdaterad
           </p>
           <p className="text-sm font-bold" style={{ color: 'var(--color-primary)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
             {DATAUTTAG}
-          </p>
-          <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-            Om data och ansvar →
           </p>
         </Link>
 

@@ -48,8 +48,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link href="/om-data" className="text-sm underline" style={LINK_STYLE}>
-                  Om data och ansvarsfriskrivning
+                <Link href="/om-statistiken" className="text-sm underline" style={LINK_STYLE}>
+                  Om statistiken
                 </Link>
               </li>
               <li>
