@@ -8,7 +8,7 @@ const tabs = [
   { label: 'Diagram', href: '/diagram' },
   { label: 'Partners', href: '/tabell' },
   { label: 'Ordlista', href: '/ordlista' },
-  { label: 'Om statistiken', href: '/om-statistiken' },
+  { label: 'Om innehållet', href: '/om-innehallet' },
 ];
 
 export default function Navigation({ alignLeft }: { alignLeft?: boolean }) {

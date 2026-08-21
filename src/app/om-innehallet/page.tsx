@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import { DATAUTTAG } from '@/lib/site';
 
-export default function OmStatistikenPage() {
+export default function OmInnehalletPage() {
   return (
     <>
       <Header />
@@ -13,7 +13,7 @@ export default function OmStatistikenPage() {
       <main className="max-w-[900px] mx-auto px-6 py-8">
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-1" style={{ color: 'var(--color-text)' }}>
-            Om statistiken
+            Om innehållet
           </h2>
         </div>
 

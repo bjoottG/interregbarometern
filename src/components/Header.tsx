@@ -28,7 +28,7 @@ export default function Header() {
         </div>
 
         {/* Datauttag */}
-        <Link href="/om-statistiken" className="ml-auto text-right flex-shrink-0">
+        <Link href="/om-innehallet" className="ml-auto text-right flex-shrink-0">
           <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
             Senast uppdaterad
           </p>
