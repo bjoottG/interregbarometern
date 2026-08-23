@@ -139,7 +139,7 @@ export default function DiagramPage() {
     for (const r of filtered) map.set(r.projektnamn, (map.get(r.projektnamn) ?? 0) + (r.partnerbudget || 0));
     return [...map.entries()]
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
+      .slice(0, 5)
       .map(([name, budget]) => ({ name, budget }));
   }, [filtered]);
 
@@ -148,7 +148,7 @@ export default function DiagramPage() {
     for (const r of filtered) map.set(r.organisationsnamn, (map.get(r.organisationsnamn) ?? 0) + (r.partnerbudget || 0));
     return [...map.entries()]
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
+      .slice(0, 5)
       .map(([name, budget]) => ({ name, budget }));
   }, [filtered]);
 
@@ -228,7 +228,7 @@ export default function DiagramPage() {
 
             {/* Tre största projekten */}
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
-              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De tre största projekten</h3>
+              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De fem största projekten</h3>
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
@@ -254,7 +254,7 @@ export default function DiagramPage() {
 
             {/* Tre största organisationerna */}
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
-              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De tre största organisationerna</h3>
+              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De fem största organisationerna</h3>
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
