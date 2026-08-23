@@ -10,7 +10,7 @@ interface Props {
   mode: 'nuts3' | 'nuts2';
 }
 
-type SortKey = 'name' | 'projekt' | 'partners' | 'budget';
+type SortKey = 'name' | 'projekt' | 'partners' | 'unikaPartners' | 'budget';
 
 export default function NutsTable({ rows, mode }: Props) {
   const { filters, setFilter } = useFilters();
@@ -68,7 +68,7 @@ export default function NutsTable({ rows, mode }: Props) {
       <table className="w-full text-sm border-collapse">
         <thead className="sticky top-0 bg-white z-10">
           <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-            {([['name', label], ['partners', 'Partners (unika)'], ['projekt', 'Projekt'], ['budget', 'EU-medel (ERDF)']] as [SortKey, string][]).map(([k, l]) => (
+            {([['name', label], ['partners', 'Partners'], ['unikaPartners', 'Varav unika'], ['projekt', 'Projekt'], ['budget', 'EU-medel (ERDF)']] as [SortKey, string][]).map(([k, l]) => (
               <th
                 key={k}
                 onClick={() => handleSort(k)}
@@ -99,7 +99,8 @@ export default function NutsTable({ rows, mode }: Props) {
                   {isActive && <span className="mr-1 text-xs">✓</span>}
                   {row.name}
                 </td>
-                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.partners)}({formatNumber(row.unikaPartners)}) st</td>
+                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.partners)} st</td>
+                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.unikaPartners)} st</td>
                 <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.projekt)} st</td>
                 <td className="py-1.5 pr-3 text-right font-mono" style={{ color: 'var(--color-text)', fontSize: 11 }}>
                   {row.budget > 0 ? formatBudget(row.budget) : '–'}
