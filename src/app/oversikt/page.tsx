@@ -71,7 +71,7 @@ export default function OversiktPage() {
                 Fördelning projekt och svenska partners per län
               </h3>
               <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-                Ett projekt kan ha partners i flera län och räknas då flera gånger.
+                Antal projekt räknas per län. Om ett projekt har partners i flera län blir summan högre än totala antalet unika projekt.
               </p>
             </div>
             <div className="overflow-auto" style={{ maxHeight: 700 }}>
