@@ -26,7 +26,7 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
       <div className={`${alignLeft ? '' : 'max-w-[1200px] mx-auto'} px-6 py-4`}>
         <div className="grid grid-cols-4 gap-3">
           <MultiSelectDropdown
-            label="NUTS 3 (Län)"
+            label="Nuts3 (Län)"
             options={NUTS3_VALUES}
             selected={filters.nuts3}
             onChange={(v) => setFilter('nuts3', v)}
