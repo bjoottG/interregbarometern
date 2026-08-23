@@ -38,19 +38,18 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
             onChange={(v) => setFilter('program', v)}
           />
           <MultiSelectDropdown
+            label="Politiskt mål"
+            options={POLITISKA_MAL}
+            selected={filters.politisktmal}
+            onChange={(v) => setFilter('politisktmal', v)}
+            getDescription={(v) => POLITISKT_MAL_DEFINITIONER[v] ?? ''}
+          />
+          <MultiSelectDropdown
             label="Specifikt mål"
             options={SPECIFIKA_MAL}
             selected={filters.specifiktmal}
             onChange={(v) => setFilter('specifiktmal', v)}
             getDescription={(v) => SPECIFIKT_MAL_DEFINITIONER[v] ?? ''}
-          />
-          <MultiSelectDropdown
-            label="Partnerroll"
-            options={ORG_ROLLER}
-            selected={filters.organisationsroll}
-            onChange={(v) => setFilter('organisationsroll', v)}
-            getLabel={(v) => ROLL_LABELS[v] ?? v}
-            getDescription={(v) => ROLL_DESCRIPTIONS[v] ?? ''}
           />
           <MultiSelectDropdown
             label="Programkategori"
@@ -59,11 +58,12 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
             onChange={(v) => setFilter('strand', v)}
           />
           <MultiSelectDropdown
-            label="Politiskt mål"
-            options={POLITISKA_MAL}
-            selected={filters.politisktmal}
-            onChange={(v) => setFilter('politisktmal', v)}
-            getDescription={(v) => POLITISKT_MAL_DEFINITIONER[v] ?? ''}
+            label="Partnerroll"
+            options={ORG_ROLLER}
+            selected={filters.organisationsroll}
+            onChange={(v) => setFilter('organisationsroll', v)}
+            getLabel={(v) => ROLL_LABELS[v] ?? v}
+            getDescription={(v) => ROLL_DESCRIPTIONS[v] ?? ''}
           />
           <MultiSelectDropdown
             label="Projekt status"
