@@ -68,7 +68,7 @@ export default function NutsTable({ rows, mode }: Props) {
       <table className="w-full text-sm border-collapse">
         <thead className="sticky top-0 bg-white z-10">
           <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-            {([['name', label], ['partners', 'Partners'], ['unikaPartners', 'Varav unika'], ['projekt', 'Projekt'], ['budget', 'EU-medel (ERDF)']] as [SortKey, string][]).map(([k, l]) => (
+            {([['name', label], ['partners', 'Partners'], ['unikaPartners', 'Unika partners'], ['projekt', 'Projekt'], ['budget', 'EU-medel (ERDF)']] as [SortKey, string][]).map(([k, l]) => (
               <th
                 key={k}
                 onClick={() => handleSort(k)}
