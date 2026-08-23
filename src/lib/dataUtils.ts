@@ -24,6 +24,10 @@ export function kpiAntalPartners(rows: Projekt[]): number {
   return rows.length;
 }
 
+export function kpiUnikaPartners(rows: Projekt[]): number {
+  return new Set(rows.map((r) => r.organisationsnamn)).size;
+}
+
 // ─── Aggregeringar ──────────────────────────────────────────────────────────
 
 /** Gruppera rader efter en nyckel, räkna unika projektnamn och summera budget */

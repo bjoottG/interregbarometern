@@ -7,7 +7,7 @@ import FilterBar from '@/components/FilterBar';
 import KPICard from '@/components/KPICard';
 import ExcelDownloadLink from '@/components/ExcelDownloadLink';
 import { useFilters } from '@/context/FilterContext';
-import { groupBy, formatBudget, kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber } from '@/lib/dataUtils';
+import { groupBy, formatBudget, kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, kpiUnikaPartners, formatNumber } from '@/lib/dataUtils';
 import { ROLL_LABELS, SPECIFIKT_MAL_DEFINITIONER, POLITISKT_MAL_DEFINITIONER, mapOrgTyp } from '@/types';
 import {
   BarChart, Bar, XAxis, YAxis, ResponsiveContainer,
@@ -217,9 +217,9 @@ export default function DiagramPage() {
         {/* Topp-sektion */}
         {/* KPI-rad */}
         <div className="grid grid-cols-3 gap-4">
-          <KPICard title="Antal unika projekt" value={`${formatNumber(kpiAntalProjekt(filtered))} st`} href="/tabell" />
-          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(filtered))} />
-          <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(filtered))} st`} href="/tabell" />
+          <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(filtered))} st`} subtitle={`varav ${formatNumber(kpiUnikaPartners(filtered))} unika organisationer`} href="/tabell" />
+          <KPICard title="Antal unika projekt" value={`${formatNumber(kpiAntalProjekt(filtered))} st`} subtitle="Varje projekt räknat en gång" href="/tabell" />
+          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(filtered))} subtitle="Beviljat stöd — inte total projektbudget" />
         </div>
 
         <div className="grid grid-cols-2 gap-5">

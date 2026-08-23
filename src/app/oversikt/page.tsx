@@ -12,7 +12,7 @@ import KrysstabellPartners from '@/components/KrysstabellPartners';
 import BudgetMalTabell from '@/components/BudgetMalTabell';
 import ExcelDownloadLink from '@/components/ExcelDownloadLink';
 import { useFilters } from '@/context/FilterContext';
-import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, formatNumber, formatBudget } from '@/lib/dataUtils';
+import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, kpiUnikaPartners, formatNumber, formatBudget } from '@/lib/dataUtils';
 
 // SSR-disable för Leaflet
 const SwedenMapLeaflet = dynamic(() => import('@/components/SwedenMapLeaflet'), { ssr: false });
@@ -25,6 +25,7 @@ export default function OversiktPage() {
     projekt:  kpiAntalProjekt(filtered),
     budget:   kpiTotalBudget(filtered),
     partners: kpiAntalPartners(filtered),
+    unikaPartners: kpiUnikaPartners(filtered),
   }), [filtered]);
 
   function handleCountyClick(name: string) {
@@ -57,9 +58,9 @@ export default function OversiktPage() {
       <main className="max-w-[1200px] mx-auto px-6 py-5">
         {/* KPI-rad */}
         <div className="grid grid-cols-3 gap-4 mb-5">
-          <KPICard title="Antal unika projekt" value={`${formatNumber(kpis.projekt)} st`} href="/tabell" />
-          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpis.budget)} />
-          <KPICard title="Antal partners" value={`${formatNumber(kpis.partners)} st`} href="/tabell" />
+          <KPICard title="Antal partners" value={`${formatNumber(kpis.partners)} st`} subtitle={`varav ${formatNumber(kpis.unikaPartners)} unika organisationer`} href="/tabell" />
+          <KPICard title="Antal unika projekt" value={`${formatNumber(kpis.projekt)} st`} subtitle="Varje projekt räknat en gång" href="/tabell" />
+          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpis.budget)} subtitle="Beviljat stöd — inte total projektbudget" />
         </div>
 
         {/* Rad 2: Tabell + Karta */}
