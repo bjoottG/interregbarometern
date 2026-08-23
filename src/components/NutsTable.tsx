@@ -18,17 +18,18 @@ export default function NutsTable({ rows, mode }: Props) {
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
 
   const aggregated = useMemo(() => {
-    const map = new Map<string, { projekts: Set<string>; partners: Set<string>; budget: number }>();
+    const map = new Map<string, { projekts: Set<string>; partners: number; unikaPartners: Set<string>; budget: number }>();
     for (const r of rows) {
       const k = (mode === 'nuts3' ? r.nuts3 : r.nuts2) || 'N/A';
-      if (!map.has(k)) map.set(k, { projekts: new Set(), partners: new Set(), budget: 0 });
+      if (!map.has(k)) map.set(k, { projekts: new Set(), partners: 0, unikaPartners: new Set(), budget: 0 });
       const e = map.get(k)!;
       e.projekts.add(r.projektnamn);
-      e.partners.add(r.organisationsnamn);
+      e.partners += 1;
+      e.unikaPartners.add(r.organisationsnamn);
       e.budget += r.partnerbudget || 0;
     }
     return Array.from(map.entries()).map(([name, v]) => ({
-      name, projekt: v.projekts.size, partners: v.partners.size, budget: v.budget,
+      name, projekt: v.projekts.size, partners: v.partners, unikaPartners: v.unikaPartners.size, budget: v.budget,
     }));
   }, [rows, mode]);
 
@@ -98,8 +99,8 @@ export default function NutsTable({ rows, mode }: Props) {
                   {isActive && <span className="mr-1 text-xs">✓</span>}
                   {row.name}
                 </td>
-                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.partners)}</td>
-                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.projekt)}</td>
+                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.partners)}({formatNumber(row.unikaPartners)}) st</td>
+                <td className="py-1.5 pr-3 text-right text-sm" style={{ color: 'var(--color-text)' }}>{formatNumber(row.projekt)} st</td>
                 <td className="py-1.5 pr-3 text-right font-mono" style={{ color: 'var(--color-text)', fontSize: 11 }}>
                   {row.budget > 0 ? formatBudget(row.budget) : '–'}
                 </td>
