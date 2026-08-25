@@ -36,24 +36,11 @@ export default function OmInnehalletPage() {
 
         {/* Ansvarsfriskrivning */}
         <div className="flex flex-col gap-4 text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
-          <h3 className="text-base font-bold">Ansvarsfriskrivning</h3>
+          <h3 className="text-base font-bold">Viktig information om innehållet</h3>
           <p>
-            Uppgifterna på denna webbplats bygger på sammanställningar av data om svenska
-            partners i Interreg-program under programperioden 2021–2027. Informationen
-            tillhandahålls i informationssyfte och i befintligt skick.
-          </p>
-          <p>
-            Trots att vi eftersträvar att uppgifterna ska vara korrekta och aktuella kan fel,
-            brister eller ofullständigheter förekomma, till exempel till följd av
-            eftersläpningar i källsystem, ändringar i projekt eller fel vid bearbetning av
-            data. Vi lämnar inga garantier för uppgifternas riktighet, fullständighet eller
-            aktualitet och tar inget ansvar för beslut som fattas eller åtgärder som vidtas
-            på grundval av innehållet på webbplatsen.
-          </p>
-          <p>
-            Uppgifterna utgör inte officiell statistik. För officiella och aktuella uppgifter
-            om enskilda program eller projekt hänvisas till respektive programs sekretariat
-            eller till Tillväxtverket.
+            Vi gör vårt bästa för att säkerställa att informationen på denna webbplats är
+            korrekt och uppdaterad. Trots detta kan vi inte garantera att all data är
+            100&nbsp;% korrekt, fullständig eller aktuell. Fel och avvikelser kan förekomma.
           </p>
         </div>
       </main>
