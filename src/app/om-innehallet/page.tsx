@@ -36,7 +36,7 @@ export default function OmInnehalletPage() {
 
         {/* Ansvarsfriskrivning */}
         <div className="flex flex-col gap-4 text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
-          <h3 className="text-base font-bold">Viktig information om innehållet</h3>
+          <h3 className="text-base font-bold">Viktig information</h3>
           <p>
             Vi gör vårt bästa för att säkerställa att informationen på denna webbplats är
             korrekt och uppdaterad. Trots detta kan vi inte garantera att all data är

@@ -28,10 +28,10 @@ const TERMS: Term[] = [
   {
     term: 'EU-medel (ERDF)',
     category: 'Finansiering',
-    definition: 'Det EU-stöd från regionalfonden som en partner erhåller för sin del av projektet. Värdet i dashboarden avser enbart EU-medel och inkluderar inte medfinansiering från nationella eller regionala källor.',
+    definition: 'Det EU-stöd från regionalfonden som en partner erhåller för sin del i projektet. Värdet i dashboarden avser enbart EU-medel och inkluderar inte medfinansiering från nationella eller regionala källor.',
   },
   {
-    term: 'Gränsregionalt samarbete (Strand A)',
+    term: 'Gränsregionalt samarbete (A)',
     category: 'Programkategori',
     definition: 'Interreg-program som samlar regioner längs gemensamma landgränser eller havsbaserade gränser. Exempel: Sverige–Norge, Öresund–Kattegat–Skagerrak, Central Baltic.',
   },
@@ -41,9 +41,9 @@ const TERMS: Term[] = [
     definition: 'EU:s program för territoriellt samarbete mellan regioner i Europa. Interreg finansieras av ERDF och syftar till att stärka ekonomisk, social och territoriell sammanhållning.',
   },
   {
-    term: 'Interregionalt samarbete (Strand C)',
+    term: 'Interregionalt samarbete (C)',
     category: 'Programkategori',
-    definition: 'Pan-europeiskt Interreg-program för erfarenhetsutbyte och kapacitetsutveckling. Täcker hela EU. Exempel: Interreg Europe, URBACT IV.',
+    definition: 'Pan-europeiskt Interreg-program för erfarenhetsutbyte och kapacitetsutveckling. Täcker hela EU samt IPA- och NDICI-länder, det vill säga länder som ansöker om medlemskap i EU. Exempel: Interreg Europe, URBACT IV.',
   },
   {
     term: 'ISO – Interreg-specifika mål',
@@ -53,17 +53,12 @@ const TERMS: Term[] = [
   {
     term: 'Kat. – Programkategori',
     category: 'Programkategori',
-    definition: 'Förkortad beteckning för programkategori (strand). A = Gränsregionalt, B = Transnationellt, C = Interregionalt.',
+    definition: 'Förkortad beteckning för programkategori. A = Gränsregionalt, B = Transnationellt, C = Interregionalt.',
   },
   {
     term: 'Lead Partner (LP)',
     category: 'Partnerroll',
     definition: 'Samordnad stödmottagare. Ansvarar för projektet gentemot programsekretariatet, undertecknar partnerskap­savtalet och hanterar EU-medlen för hela projektet.',
-  },
-  {
-    term: 'LP – Lead Partner',
-    category: 'Partnerroll',
-    definition: 'Se Lead Partner.',
   },
   {
     term: 'NUTS – Nomenclature des Unités Territoriales Statistiques',
@@ -106,11 +101,6 @@ const TERMS: Term[] = [
     definition: 'Politiskt mål 5. Fokuserar på lokal och territoriell utveckling samt hållbar turism och kultur.',
   },
   {
-    term: 'PP – Projekt Partner',
-    category: 'Partnerroll',
-    definition: 'Se Projekt Partner.',
-  },
-  {
     term: 'Programperiod 2021–2027',
     category: 'Program',
     definition: 'Den nuvarande EU-budgetperioden. Interreg-programmen i dashboarden tillhör denna period.',
@@ -118,7 +108,7 @@ const TERMS: Term[] = [
   {
     term: 'Projekt Partner (PP)',
     category: 'Partnerroll',
-    definition: 'Medverkande projektpartner. Deltar aktivt i projektgenomförandet och erhåller EU-medel för sin del av projektet. Tecknar partnersk­apsavtal med Lead Partner.',
+    definition: 'Medverkande projektpartner. Deltar aktivt i projektgenomförandet och erhåller EU-medel för sin del i projektet. Tecknar partnersk­apsavtal med Lead Partner.',
   },
   {
     term: 'Pågående (projekt)',
@@ -136,11 +126,6 @@ const TERMS: Term[] = [
     definition: 'Det detaljerade mål som ett projekt är kopplat till inom ett politiskt mål. Koderna börjar med RSO (Regionalspecifika mål) eller ISO (Interreg-specifika mål).',
   },
   {
-    term: 'Strand',
-    category: 'Programkategori',
-    definition: 'Beteckning för typ av Interreg-program: A (Gränsregionalt), B (Transnationellt) eller C (Interregionalt). Bestäms av programmets geografiska och tematiska inriktning.',
-  },
-  {
     term: 'Svenska partners',
     category: 'Partner',
     definition: 'Organisationer registrerade i Sverige som deltar i ett Interreg-projekt i rollen som LP, PP eller AP. Dashboarden visar enbart svenska partners.',
@@ -151,7 +136,7 @@ const TERMS: Term[] = [
     definition: 'Sveriges nationella myndighet för tillväxt och regional utveckling. Nationell kontaktpunkt för flera Interreg-program och ansvarar för att följa upp svenska partners deltagande.',
   },
   {
-    term: 'Transnationellt samarbete (Strand B)',
+    term: 'Transnationellt samarbete (B)',
     category: 'Programkategori',
     definition: 'Interreg-program som täcker större geografiska områden, t.ex. Östersjön eller Nordsjön. Samlar länder och regioner kring gemensamma utmaningar. Exempel: Baltic Sea Region, Interreg North Sea, Northern Periphery and Arctic.',
   },
