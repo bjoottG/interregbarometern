@@ -51,7 +51,7 @@ const TERMS: Term[] = [
     definition: 'En separat målkategori för Interreg-program som kompletterar de ordinarie politiska målen (PO1–PO5). Fokuserar på institutionell kapacitet och gränsöverskridande samarbete.',
   },
   {
-    term: 'Kat. – Programkategori',
+    term: 'Programkategori',
     category: 'Programkategori',
     definition: 'Förkortad beteckning för programkategori. A = Gränsregionalt, B = Transnationellt, C = Interregionalt.',
   },
