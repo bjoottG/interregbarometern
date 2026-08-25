@@ -66,13 +66,13 @@ export default function FilterBar({ alignLeft }: { alignLeft?: boolean }) {
             getDescription={(v) => ROLL_DESCRIPTIONS[v] ?? ''}
           />
           <MultiSelectDropdown
-            label="Projekt status"
+            label="Projektstatus"
             options={PAGAENDE_STATUS}
             selected={filters.pagaende}
             onChange={(v) => setFilter('pagaende', v)}
           />
           <MultiSelectDropdown
-            label="Organisation typ"
+            label="Organisationstyp"
             options={ORG_TYPER_DISPLAY}
             selected={filters.organisationstyp}
             onChange={(v) => setFilter('organisationstyp', v)}
