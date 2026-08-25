@@ -91,7 +91,7 @@ export default function TabellPage() {
 
       <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="grid grid-cols-3 gap-4 mb-5">
-          <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(rows))} st`} subtitle={`varav ${formatNumber(kpiUnikaPartners(rows))} unika organisationer`} />
+          <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(rows))} st`} subtitle={`varav ${formatNumber(kpiUnikaPartners(rows))} unika partners`} />
           <KPICard title="Antal unika projekt" value={`${formatNumber(kpiAntalProjekt(rows))} st`} subtitle="Varje projekt räknat en gång" />
           <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(rows))} subtitle="Beviljat EU-stöd — inte total projektbudget" />
         </div>
