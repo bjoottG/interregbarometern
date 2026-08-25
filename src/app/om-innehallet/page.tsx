@@ -29,7 +29,7 @@ export default function OmInnehalletPage() {
             {DATAUTTAG}
           </p>
           <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-            Tabellerna och diagrammen bygger på uppgifter hämtade detta datum.
+            Tabellerna och diagrammen bygger på uppgifter som är inkomna innan detta datum.
             Ändringar som skett senare syns inte på webbplatsen.
           </p>
         </div>
