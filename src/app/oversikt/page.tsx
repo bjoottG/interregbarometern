@@ -60,7 +60,7 @@ export default function OversiktPage() {
         <div className="grid grid-cols-3 gap-4 mb-5">
           <KPICard title="Antal partners" value={`${formatNumber(kpis.partners)} st`} subtitle={`varav ${formatNumber(kpis.unikaPartners)} unika organisationer`} href="/tabell" />
           <KPICard title="Antal unika projekt" value={`${formatNumber(kpis.projekt)} st`} subtitle="Varje projekt räknat en gång" href="/tabell" />
-          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpis.budget)} subtitle="Beviljat stöd — inte total projektbudget" />
+          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpis.budget)} subtitle="Beviljat EU-stöd — inte total projektbudget" />
         </div>
 
         {/* Rad 2: Tabell + Karta */}
