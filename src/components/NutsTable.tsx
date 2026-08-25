@@ -61,7 +61,7 @@ export default function NutsTable({ rows, mode }: Props) {
 
   function SortIcon(_: { col: SortKey }) { return null; }
 
-  const label = mode === 'nuts3' ? 'Nuts3 (Län)' : 'Nuts2';
+  const label = mode === 'nuts3' ? 'NUTS 3 (Län)' : 'NUTS 2';
 
   return (
     <div className="overflow-auto h-full">

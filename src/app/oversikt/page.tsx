@@ -85,7 +85,7 @@ export default function OversiktPage() {
           <div className="bg-white rounded-xl shadow-sm border overflow-hidden" style={{ borderColor: 'var(--color-border)' }}>
             <div className="px-4 pt-4 pb-2 border-b" style={{ borderColor: 'var(--color-border)' }}>
               <h3 className="font-bold text-sm" style={{ color: 'var(--color-text)' }}>
-                Antal projekt fördelat på Nuts3 (karta)
+                Antal projekt fördelat på NUTS 3 (karta)
               </h3>
             </div>
             <div style={{ height: 700 }}>

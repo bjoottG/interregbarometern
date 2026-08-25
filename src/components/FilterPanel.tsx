@@ -129,13 +129,13 @@ export default function FilterPanel() {
             </select>
           </div>
           <MultiSelectDropdown
-            label="Org. Nuts2"
+            label="Org. NUTS 2"
             options={NUTS2_VALUES}
             selected={filters.nuts2}
             onChange={(v) => setFilter('nuts2', v)}
           />
           <MultiSelectDropdown
-            label="Org. Nuts3"
+            label="Org. NUTS 3"
             options={NUTS3_VALUES}
             selected={filters.nuts3}
             onChange={(v) => setFilter('nuts3', v)}
