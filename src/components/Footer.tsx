@@ -87,8 +87,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href={mailHref('info', 'tillvaxtverket.se')} className="text-sm underline" style={LINK_STYLE}>
-                  info@tillvaxtverket.se
+                <a href={mailHref('Interreg', 'tillvaxtverket.se')} className="text-sm underline" style={LINK_STYLE}>
+                  Interreg@tillvaxtverket.se
                 </a>
               </li>
             </ul>
