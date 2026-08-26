@@ -12,16 +12,11 @@ import { kpiAntalProjekt, kpiTotalBudget, kpiAntalPartners, kpiUnikaPartners, fo
 
 export default function TabellPage() {
   const { filtered, isLoading } = useFilters();
-  const [input, setInput] = useState('');
   const [query, setQuery] = useState('');
 
-  function handleSearch() {
-    setQuery(input.trim());
-  }
-
   const rows = useMemo(() => {
-    if (!query) return filtered;
-    const q = query.toLowerCase();
+    const q = query.trim().toLowerCase();
+    if (!q) return filtered;
     return filtered.filter(r => r.organisationsnamn?.toLowerCase().includes(q));
   }, [filtered, query]);
 
@@ -43,52 +38,6 @@ export default function TabellPage() {
       <Navigation />
       <FilterBar />
 
-      {/* Sökfält */}
-      <div className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
-        <div className="max-w-[1400px] mx-auto px-6 py-3 flex items-end gap-3">
-          <div className="flex flex-col gap-1 flex-1 max-w-md">
-            <label className="text-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>
-              Sök Partner/Organisation
-            </label>
-          <input
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSearch()}
-            placeholder="Sök på Partner/Organisation…"
-            className="w-full px-3 py-2 text-sm border rounded-lg outline-none"
-            style={{
-              borderColor: 'var(--color-border)',
-              color: 'var(--color-text)',
-            }}
-            onFocus={e => (e.target.style.borderColor = 'var(--color-primary)')}
-            onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
-          />
-          </div>
-          <button
-            onClick={handleSearch}
-            className="px-4 py-2 text-sm font-medium rounded-lg"
-            style={{ background: 'var(--color-primary)', color: '#fff' }}
-          >
-            Sök
-          </button>
-          {query && (
-            <button
-              onClick={() => { setInput(''); setQuery(''); }}
-              className="text-sm"
-              style={{ color: 'var(--color-text-muted)' }}
-            >
-              Rensa
-            </button>
-          )}
-          {query && (
-            <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-              {rows.length} träffar för "{query}"
-            </span>
-          )}
-        </div>
-      </div>
-
       <main className="max-w-[1400px] mx-auto px-6 py-5">
         <div className="grid grid-cols-3 gap-4 mb-5">
           <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(rows))} st`} subtitle={`varav ${formatNumber(kpiUnikaPartners(rows))} unika partners`} />
@@ -96,6 +45,28 @@ export default function TabellPage() {
           <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(rows))} subtitle="Beviljat EU-stöd — inte total projektbudget" />
         </div>
         <div className="bg-white rounded-xl shadow-sm border p-5" style={{ borderColor: 'var(--color-border)' }}>
+          <div className="flex items-end justify-between mb-4">
+            <h3 className="font-bold text-base" style={{ color: 'var(--color-text)' }}>
+              Projektlista
+            </h3>
+            <div className="flex flex-col gap-1 w-full max-w-xs">
+              <label className="text-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>
+                Sök i tabellen
+              </label>
+              <input
+                type="text"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                className="w-full px-3 py-2 text-sm border rounded-lg outline-none"
+                style={{
+                  borderColor: 'var(--color-border)',
+                  color: 'var(--color-text)',
+                }}
+                onFocus={e => (e.target.style.borderColor = 'var(--color-primary)')}
+                onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
+              />
+            </div>
+          </div>
           <ProjectTable rows={rows} />
           <div className="mt-3">
             <ExcelDownloadLink />
