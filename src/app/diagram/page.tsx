@@ -232,7 +232,7 @@ export default function DiagramPage() {
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totaler</th>
+                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totalt</th>
                     <th className="text-right py-1.5 font-semibold whitespace-nowrap font-mono" style={{ color: 'var(--color-text-muted)' }}>
                       {formatBudget(toppProjekt.reduce((s, d) => s + d.budget, 0))}
                     </th>
@@ -258,7 +258,7 @@ export default function DiagramPage() {
               <table className="w-full text-xs border-collapse">
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totaler</th>
+                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totalt</th>
                     <th className="text-right py-1.5 font-semibold whitespace-nowrap font-mono" style={{ color: 'var(--color-text-muted)' }}>
                       {formatBudget(toppOrg.reduce((s, d) => s + d.budget, 0))}
                     </th>
