@@ -246,7 +246,7 @@ export default function DiagramPage() {
 
             {/* Tre största organisationerna */}
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
-              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De fem största organisationerna</h3>
+              <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De fem största partnerna</h3>
               <table className="w-full text-xs border-collapse">
                 <tbody>
                   {toppOrg.map(({ name, budget }) => (
