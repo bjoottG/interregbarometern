@@ -230,14 +230,6 @@ export default function DiagramPage() {
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
               <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De fem största projekten</h3>
               <table className="w-full text-xs border-collapse">
-                <thead>
-                  <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totalt</th>
-                    <th className="text-right py-1.5 font-semibold whitespace-nowrap font-mono" style={{ color: 'var(--color-text-muted)' }}>
-                      {formatBudget(toppProjekt.reduce((s, d) => s + d.budget, 0))}
-                    </th>
-                  </tr>
-                </thead>
                 <tbody>
                   {toppProjekt.map(({ name, budget }) => (
                     <tr key={name} className="border-b" style={{ borderColor: 'var(--color-border)' }}>
@@ -256,14 +248,6 @@ export default function DiagramPage() {
             <div className="bg-white rounded-xl shadow-sm border p-4" style={{ borderColor: 'var(--color-border)' }}>
               <h3 className="font-bold text-sm mb-2" style={{ color: 'var(--color-text)' }}>De fem största organisationerna</h3>
               <table className="w-full text-xs border-collapse">
-                <thead>
-                  <tr className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-                    <th className="text-left py-1.5 font-semibold" style={{ color: 'var(--color-text)' }}>Totalt</th>
-                    <th className="text-right py-1.5 font-semibold whitespace-nowrap font-mono" style={{ color: 'var(--color-text-muted)' }}>
-                      {formatBudget(toppOrg.reduce((s, d) => s + d.budget, 0))}
-                    </th>
-                  </tr>
-                </thead>
                 <tbody>
                   {toppOrg.map(({ name, budget }) => (
                     <tr key={name} className="border-b" style={{ borderColor: 'var(--color-border)' }}>
