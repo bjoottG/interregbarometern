@@ -117,7 +117,11 @@ export async function POST(req: Request) {
     );
   }
 
-  const client = new Anthropic();
+  const client = new Anthropic({
+    ...(process.env.ANTHROPIC_WORKSPACE_ID
+      ? { defaultHeaders: { 'anthropic-workspace-id': process.env.ANTHROPIC_WORKSPACE_ID } }
+      : {}),
+  });
 
   try {
     const response = await client.messages.parse({
