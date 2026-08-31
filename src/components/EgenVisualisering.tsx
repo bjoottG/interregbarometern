@@ -14,11 +14,11 @@ export interface Visualisering {
   grupperaPa:
     | 'program' | 'nuts3' | 'politisktmal' | 'specifiktmal'
     | 'strand_kod' | 'organisationsroll' | 'organisationstyp'
-    | 'projektnamn' | 'organisationsnamn';
+    | 'projekttyp' | 'projektnamn' | 'organisationsnamn';
   matvarde: 'antalPartners' | 'unikaPartners' | 'antalProjekt' | 'budget';
   filter: Partial<Record<
     'program' | 'nuts3' | 'politisktmal' | 'specifiktmal'
-    | 'strand_kod' | 'organisationsroll' | 'organisationstyp',
+    | 'strand_kod' | 'organisationsroll' | 'organisationstyp' | 'projekttyp',
     string[] | null
   >>;
   topN: number | null;

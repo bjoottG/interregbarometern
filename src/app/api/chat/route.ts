@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import {
   PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
-  ORG_TYPER_DISPLAY, STRAND_VALUES, ORG_ROLLER,
+  ORG_TYPER_DISPLAY, STRAND_VALUES, ORG_ROLLER, PROJEKTTYPER,
   POLITISKT_MAL_DEFINITIONER, SPECIFIKT_MAL_DEFINITIONER, ROLL_LABELS,
 } from '@/types';
 
@@ -12,7 +12,7 @@ export const maxDuration = 60;
 const GRUPPERINGAR = [
   'program', 'nuts3', 'politisktmal', 'specifiktmal',
   'strand_kod', 'organisationsroll', 'organisationstyp',
-  'projektnamn', 'organisationsnamn',
+  'projekttyp', 'projektnamn', 'organisationsnamn',
 ] as const;
 
 const MATVARDEN = ['antalPartners', 'unikaPartners', 'antalProjekt', 'budget'] as const;
@@ -29,6 +29,7 @@ const VisualiseringSchema = z.object({
     strand_kod: z.array(z.string()).nullable(),
     organisationsroll: z.array(z.string()).nullable(),
     organisationstyp: z.array(z.string()).nullable(),
+    projekttyp: z.array(z.string()).nullable(),
   }),
   topN: z.number().nullable(),
   titel: z.string(),
@@ -49,6 +50,7 @@ DATASETET: En rad per svensk partner-medverkan i ett Interreg-projekt, programpe
 - strand_kod (programkategori): ${STRAND_VALUES.join(', ')} (A = Gränsregionalt, B = Transnationellt, C = Interregionalt)
 - organisationsroll: ${ORG_ROLLER.map(r => `${r} (${ROLL_LABELS[r] ?? r})`).join(', ')}
 - organisationstyp: ${ORG_TYPER_DISPLAY.join(', ')}
+- projekttyp: ${PROJEKTTYPER.join(', ')}
 - projektnamn, organisationsnamn: fritext
 - partnerbudget: beviljat EU-stöd (ERDF) i euro per partner
 
