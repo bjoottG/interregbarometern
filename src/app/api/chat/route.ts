@@ -110,6 +110,13 @@ export async function POST(req: Request) {
     return Response.json({ error: 'Ingen fråga angiven.' }, { status: 400 });
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return Response.json(
+      { error: 'AI-tjänsten är felkonfigurerad: API-nyckel saknas i miljön.' },
+      { status: 500 },
+    );
+  }
+
   const client = new Anthropic();
 
   try {
