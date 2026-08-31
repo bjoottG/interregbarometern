@@ -18,9 +18,25 @@ const EXEMPEL = [
   'Tabell över de 10 län med flest partners',
 ];
 
+const LOSENORD = 'alto255';
+
 export default function SkapaEgetPage() {
   const [rows, setRows] = useState<SkapaEgetRad[] | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [losenInput, setLosenInput] = useState('');
+  const [upplast, setUpplast] = useState(false);
+
+  useEffect(() => {
+    if (sessionStorage.getItem('skapaEgetUpplast') === '1') setUpplast(true);
+  }, []);
+
+  function provaLosen(value: string) {
+    setLosenInput(value);
+    if (value === LOSENORD) {
+      setUpplast(true);
+      sessionStorage.setItem('skapaEgetUpplast', '1');
+    }
+  }
 
   useEffect(() => {
     fetch('/data/skapaeget.json')
@@ -34,7 +50,7 @@ export default function SkapaEgetPage() {
 
   async function send(text: string) {
     const question = text.trim();
-    if (!question || busy) return;
+    if (!question || busy || !upplast) return;
     const next: ChatMessage[] = [...messages, { role: 'user', text: question }];
     setMessages(next);
     setInput('');
@@ -131,8 +147,26 @@ export default function SkapaEgetPage() {
             )}
           </div>
 
+          {/* Lösenord */}
+          {!upplast && (
+            <div className="flex flex-col gap-1 border-t pt-4 mb-3" style={{ borderColor: 'var(--color-border)' }}>
+              <label className="text-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>
+                Ange lösenord för att använda funktionen
+              </label>
+              <input
+                type="password"
+                value={losenInput}
+                onChange={e => provaLosen(e.target.value)}
+                className="max-w-xs px-3 py-2 text-sm border rounded-lg outline-none"
+                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
+                onFocus={e => (e.target.style.borderColor = 'var(--color-primary)')}
+                onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
+              />
+            </div>
+          )}
+
           {/* Inmatning */}
-          <div className="flex gap-3 items-end border-t pt-4" style={{ borderColor: 'var(--color-border)' }}>
+          <div className={`flex gap-3 items-end ${upplast ? 'border-t pt-4' : ''}`} style={{ borderColor: 'var(--color-border)' }}>
             <textarea
               value={input}
               onChange={e => setInput(e.target.value)}
@@ -143,16 +177,17 @@ export default function SkapaEgetPage() {
                 }
               }}
               rows={2}
-              placeholder="Beskriv diagrammet eller tabellen du vill skapa…"
-              className="flex-1 px-3 py-2 text-sm border rounded-lg outline-none resize-none"
+              disabled={!upplast}
+              placeholder={upplast ? 'Beskriv diagrammet eller tabellen du vill skapa…' : 'Låst — ange lösenord ovan'}
+              className="flex-1 px-3 py-2 text-sm border rounded-lg outline-none resize-none disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ borderColor: 'var(--color-border)', color: 'var(--color-text)' }}
               onFocus={e => (e.target.style.borderColor = 'var(--color-primary)')}
               onBlur={e => (e.target.style.borderColor = 'var(--color-border)')}
             />
             <button
               onClick={() => send(input)}
-              disabled={busy || !input.trim()}
-              className="px-4 py-2 text-sm font-medium rounded-lg disabled:opacity-50"
+              disabled={busy || !input.trim() || !upplast}
+              className="px-4 py-2 text-sm font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ background: 'var(--color-primary)', color: '#fff' }}
             >
               Skicka
