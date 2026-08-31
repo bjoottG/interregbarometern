@@ -7,6 +7,7 @@ const tabs = [
   { label: 'Översikt', href: '/oversikt' },
   { label: 'Diagram', href: '/diagram' },
   { label: 'Partners', href: '/tabell' },
+  { label: 'Skapa eget', href: '/skapa-eget' },
   { label: 'Ordlista', href: '/ordlista' },
   { label: 'Om innehållet', href: '/om-innehallet' },
 ];
