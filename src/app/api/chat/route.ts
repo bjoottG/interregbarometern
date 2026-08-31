@@ -145,6 +145,7 @@ export async function POST(req: Request) {
       return Response.json({ error: 'AI-tjänsten är felkonfigurerad.' }, { status: 500 });
     }
     console.error('Chat API error:', error);
-    return Response.json({ error: 'Något gick fel — försök igen.' }, { status: 500 });
+    const detail = error instanceof Error ? `${error.constructor.name}: ${error.message.slice(0, 300)}` : String(error).slice(0, 300);
+    return Response.json({ error: 'Något gick fel — försök igen.', detail }, { status: 500 });
   }
 }
