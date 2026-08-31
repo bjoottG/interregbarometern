@@ -1,10 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import EgenVisualisering, { type Visualisering } from '@/components/EgenVisualisering';
-import { useFilters } from '@/context/FilterContext';
+import type { SkapaEgetRad } from '@/lib/skapaEgetMeta';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -19,8 +19,15 @@ const EXEMPEL = [
 ];
 
 export default function SkapaEgetPage() {
-  const { filtered, isLoading } = useFilters();
+  const [rows, setRows] = useState<SkapaEgetRad[] | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  useEffect(() => {
+    fetch('/data/skapaeget.json')
+      .then(r => { if (!r.ok) throw new Error('Kunde inte hämta skapaeget.json'); return r.json(); })
+      .then(setRows)
+      .catch(() => setRows([]));
+  }, []);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
@@ -60,7 +67,7 @@ export default function SkapaEgetPage() {
     }
   }
 
-  if (isLoading) {
+  if (rows === null) {
     return (
       <>
         <Header />
@@ -114,7 +121,7 @@ export default function SkapaEgetPage() {
                 ) : (
                   <div className="max-w-[95%]">
                     <p className="text-sm" style={{ color: 'var(--color-text)' }}>{m.text}</p>
-                    {m.visualisering && <EgenVisualisering spec={m.visualisering} rows={filtered} />}
+                    {m.visualisering && <EgenVisualisering spec={m.visualisering} rows={rows} />}
                   </div>
                 )}
               </div>

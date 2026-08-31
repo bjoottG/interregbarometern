@@ -1,36 +1,41 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
-import {
-  PROGRAMS, POLITISKA_MAL, SPECIFIKA_MAL, NUTS3_VALUES,
-  ORG_TYPER_DISPLAY, STRAND_VALUES, ORG_ROLLER, PROJEKTTYPER,
-  POLITISKT_MAL_DEFINITIONER, SPECIFIKT_MAL_DEFINITIONER, ROLL_LABELS,
-} from '@/types';
+import { POLITISKT_MAL_DEFINITIONER, SPECIFIKT_MAL_DEFINITIONER, ROLL_LABELS } from '@/types';
+import { FALT_VARDEN, ANTAL_RADER } from '@/lib/skapaEgetMeta';
 
 export const maxDuration = 60;
 
 const GRUPPERINGAR = [
-  'program', 'nuts3', 'politisktmal', 'specifiktmal',
-  'strand_kod', 'organisationsroll', 'organisationstyp',
-  'projekttyp', 'projektnamn', 'organisationsnamn',
+  'program', 'projekttyp', 'organisationsagande', 'organisationstyp',
+  'partnerroll', 'stad', 'nuts3', 'nuts2', 'politisktmal', 'specifiktmal',
+  'projektar', 'land', 'projektnamn', 'organisationsnamn',
 ] as const;
 
 const MATVARDEN = ['antalPartners', 'unikaPartners', 'antalProjekt', 'budget'] as const;
+
+const filterFields = {
+  program: z.array(z.string()).nullable(),
+  projekttyp: z.array(z.string()).nullable(),
+  organisationsagande: z.array(z.string()).nullable(),
+  organisationstyp: z.array(z.string()).nullable(),
+  partnerroll: z.array(z.string()).nullable(),
+  stad: z.array(z.string()).nullable(),
+  nuts3: z.array(z.string()).nullable(),
+  nuts2: z.array(z.string()).nullable(),
+  politisktmal: z.array(z.string()).nullable(),
+  specifiktmal: z.array(z.string()).nullable(),
+  projektar: z.array(z.string()).nullable(),
+  land: z.array(z.string()).nullable(),
+  projektnamn: z.array(z.string()).nullable(),
+  organisationsnamn: z.array(z.string()).nullable(),
+};
 
 const VisualiseringSchema = z.object({
   typ: z.enum(['stapel', 'cirkel', 'tabell']),
   grupperaPa: z.enum(GRUPPERINGAR),
   matvarde: z.enum(MATVARDEN),
-  filter: z.object({
-    program: z.array(z.string()).nullable(),
-    nuts3: z.array(z.string()).nullable(),
-    politisktmal: z.array(z.string()).nullable(),
-    specifiktmal: z.array(z.string()).nullable(),
-    strand_kod: z.array(z.string()).nullable(),
-    organisationsroll: z.array(z.string()).nullable(),
-    organisationstyp: z.array(z.string()).nullable(),
-    projekttyp: z.array(z.string()).nullable(),
-  }),
+  filter: z.object(filterFields),
   topN: z.number().nullable(),
   titel: z.string(),
 });
@@ -40,19 +45,33 @@ const SvarSchema = z.object({
   visualisering: VisualiseringSchema.nullable(),
 });
 
+const KATEGORI_BESKRIVNING: Record<string, string> = {
+  program: 'Interreg-program',
+  projekttyp: 'typ av projekt',
+  organisationsagande: 'privat/offentligt ägande',
+  organisationstyp: 'typ av organisation',
+  partnerroll: `partnerroll: ${Object.entries(ROLL_LABELS).map(([k, v]) => `${k} = ${v}`).join(', ')}`,
+  stad: 'organisationens säteskommun/stad',
+  nuts3: 'län (NUTS 3)',
+  nuts2: 'riksområde (NUTS 2)',
+  politisktmal: `politiskt mål: ${Object.entries(POLITISKT_MAL_DEFINITIONER).map(([k, v]) => `${k} = ${v}`).join(', ')}`,
+  specifiktmal: `specifikt mål: ${Object.entries(SPECIFIKT_MAL_DEFINITIONER).map(([k, v]) => `${k} = ${v}`).join('; ')}`,
+  projektar: 'projektets startår',
+  land: 'land',
+};
+
 const SYSTEM_PROMPT = `Du är en hjälpsam dataanalys-assistent i dashboarden "Svenska Partners i Interreg" (Tillväxtverket). Användaren ställer frågor på svenska och du hjälper dem skapa egna diagram och tabeller ur dashboardens dataset.
 
-DATASETET: En rad per svensk partner-medverkan i ett Interreg-projekt, programperioden 2021–2027. Fält och giltiga värden:
-- program: ${PROGRAMS.join(', ')}
-- nuts3 (län): ${NUTS3_VALUES.join(', ')}
-- politisktmal: ${POLITISKA_MAL.map(m => `${m} (${POLITISKT_MAL_DEFINITIONER[m] ?? ''})`).join(', ')}
-- specifiktmal: ${SPECIFIKA_MAL.map(m => `${m} (${SPECIFIKT_MAL_DEFINITIONER[m] ?? ''})`).join(', ')}
-- strand_kod (programkategori): ${STRAND_VALUES.join(', ')} (A = Gränsregionalt, B = Transnationellt, C = Interregionalt)
-- organisationsroll: ${ORG_ROLLER.map(r => `${r} (${ROLL_LABELS[r] ?? r})`).join(', ')}
-- organisationstyp: ${ORG_TYPER_DISPLAY.join(', ')}
-- projekttyp: ${PROJEKTTYPER.join(', ')}
-- projektnamn, organisationsnamn: fritext
+DATASETET: ${ANTAL_RADER} rader — en rad per svensk partner-medverkan i ett Interreg-projekt, programperioden 2021–2027. Kategoriska fält och deras giltiga värden:
+${Object.entries(FALT_VARDEN).map(([field, values]) =>
+  `- ${field} (${KATEGORI_BESKRIVNING[field] ?? ''}): ${values.join(', ')}`,
+).join('\n')}
+- projektnamn, organisationsnamn: fritext (kan användas som gruppering eller filter med exakta namn)
+- startdatum, slutdatum: projektets start-/slutdatum (ÅÅÅÅ-MM-DD)
+- vatnummer: organisationens momsregistreringsnummer
 - partnerbudget: beviljat EU-stöd (ERDF) i euro per partner
+
+Observera att värden som "#N/A" och "N/A" förekommer i datat och betyder att uppgift saknas.
 
 MÄTVÄRDEN du kan välja:
 - antalPartners: antal partnerrader

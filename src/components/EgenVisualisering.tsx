@@ -6,21 +6,22 @@ import {
   PieChart, Pie, Cell, CartesianGrid,
 } from 'recharts';
 import { formatNumber, formatBudget } from '@/lib/dataUtils';
-import { DIAGRAM_COLORS, ROLL_LABELS, mapOrgTyp } from '@/types';
-import type { Projekt } from '@/types';
+import { DIAGRAM_COLORS } from '@/types';
+import type { SkapaEgetRad } from '@/lib/skapaEgetMeta';
+
+const GRUPPERINGAR = [
+  'program', 'projekttyp', 'organisationsagande', 'organisationstyp',
+  'partnerroll', 'stad', 'nuts3', 'nuts2', 'politisktmal', 'specifiktmal',
+  'projektar', 'land', 'projektnamn', 'organisationsnamn',
+] as const;
+
+type Gruppering = (typeof GRUPPERINGAR)[number];
 
 export interface Visualisering {
   typ: 'stapel' | 'cirkel' | 'tabell';
-  grupperaPa:
-    | 'program' | 'nuts3' | 'politisktmal' | 'specifiktmal'
-    | 'strand_kod' | 'organisationsroll' | 'organisationstyp'
-    | 'projekttyp' | 'projektnamn' | 'organisationsnamn';
+  grupperaPa: Gruppering;
   matvarde: 'antalPartners' | 'unikaPartners' | 'antalProjekt' | 'budget';
-  filter: Partial<Record<
-    'program' | 'nuts3' | 'politisktmal' | 'specifiktmal'
-    | 'strand_kod' | 'organisationsroll' | 'organisationstyp' | 'projekttyp',
-    string[] | null
-  >>;
+  filter: Partial<Record<Gruppering, string[] | null>>;
   topN: number | null;
   titel: string;
 }
@@ -34,29 +35,21 @@ const MATVARDE_LABELS: Record<Visualisering['matvarde'], string> = {
   budget: 'EU-medel (ERDF)',
 };
 
-function groupKey(row: Projekt, grupperaPa: Visualisering['grupperaPa']): string {
-  if (grupperaPa === 'organisationstyp') return mapOrgTyp(row.organisationstyp);
-  if (grupperaPa === 'organisationsroll') return ROLL_LABELS[row.organisationsroll] ?? row.organisationsroll;
-  return String(row[grupperaPa] ?? 'Okänd');
-}
-
-function matchesFilter(row: Projekt, filter: Visualisering['filter']): boolean {
+function matchesFilter(row: SkapaEgetRad, filter: Visualisering['filter']): boolean {
   for (const [key, values] of Object.entries(filter)) {
     if (!values || values.length === 0) continue;
-    const rowValue = key === 'organisationstyp'
-      ? mapOrgTyp(row.organisationstyp)
-      : String(row[key as keyof Projekt] ?? '');
+    const rowValue = String(row[key as keyof SkapaEgetRad] ?? '');
     if (!values.includes(rowValue)) return false;
   }
   return true;
 }
 
-export default function EgenVisualisering({ spec, rows }: { spec: Visualisering; rows: Projekt[] }) {
+export default function EgenVisualisering({ spec, rows }: { spec: Visualisering; rows: SkapaEgetRad[] }) {
   const data = useMemo(() => {
     const groups = new Map<string, { count: number; orgs: Set<string>; projekt: Set<string>; budget: number }>();
     for (const row of rows) {
       if (!matchesFilter(row, spec.filter ?? {})) continue;
-      const key = groupKey(row, spec.grupperaPa);
+      const key = String(row[spec.grupperaPa] ?? 'Okänd');
       if (!groups.has(key)) groups.set(key, { count: 0, orgs: new Set(), projekt: new Set(), budget: 0 });
       const g = groups.get(key)!;
       g.count += 1;
