@@ -43,9 +43,9 @@ export default function Footer() {
             <h3 className="font-bold text-sm mb-3" style={{ color: '#1D1D1B' }}>Mer info</h3>
             <ul className="flex flex-col gap-2">
               <li>
-                <a href="#" className="text-sm underline" style={LINK_STYLE}>
+                <Link href="/tillganglighetsredogorelse" className="text-sm underline" style={LINK_STYLE}>
                   Tillgänglighetsredogörelse
-                </a>
+                </Link>
               </li>
               <li>
                 <Link href="/om-innehallet" className="text-sm underline" style={LINK_STYLE}>
