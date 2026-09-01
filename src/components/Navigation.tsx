@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { DATAUTTAG } from '@/lib/site';
 
 const tabs = [
   { label: 'Översikt', href: '/oversikt' },
@@ -34,6 +35,14 @@ export default function Navigation({ alignLeft }: { alignLeft?: boolean }) {
             </Link>
           );
         })}
+
+        {/* Datauttag */}
+        <Link href="/om-innehallet" className="ml-auto self-center text-sm flex-shrink-0">
+          <span style={{ color: 'var(--color-text-muted)' }}>Senast uppdaterad </span>
+          <span className="font-bold" style={{ color: 'var(--color-primary)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            {DATAUTTAG}
+          </span>
+        </Link>
       </div>
     </nav>
   );

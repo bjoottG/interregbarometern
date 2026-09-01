@@ -1,8 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import { DATAUTTAG } from '@/lib/site';
-
 export default function Header() {
   return (
     <header className="bg-white border-b" style={{ borderColor: 'var(--color-border)' }}>
@@ -28,16 +25,6 @@ export default function Header() {
             En översikt av svenska partners i Interreg-projekt 2021–2027: vilka deltar, var de finns och hur EU-medlen fördelas
           </p>
         </div>
-
-        {/* Datauttag */}
-        <Link href="/om-innehallet" className="ml-auto text-right flex-shrink-0">
-          <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-            Senast uppdaterad
-          </p>
-          <p className="text-sm font-bold" style={{ color: 'var(--color-primary)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
-            {DATAUTTAG}
-          </p>
-        </Link>
 
       </div>
     </header>
