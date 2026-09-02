@@ -26,6 +26,20 @@ export default function Header() {
           </p>
         </div>
 
+        {/* Logga ut (endast prototyp) */}
+        <div className="ml-auto text-right flex-shrink-0">
+          <a
+            href="/logga-ut"
+            className="inline-block px-3 py-1.5 text-sm font-medium rounded-lg border transition-colors hover:bg-gray-50"
+            style={{ color: 'var(--color-primary)', borderColor: 'var(--color-primary)' }}
+          >
+            Logga ut
+          </a>
+          <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>
+            Gäller endast denna prototyp
+          </p>
+        </div>
+
       </div>
     </header>
   );
