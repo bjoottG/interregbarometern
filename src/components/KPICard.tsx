@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 interface Props {
-  title: string;
+  title: React.ReactNode;
   value: string;
   subtitle?: string;
   href?: string;

@@ -163,7 +163,8 @@ export default function OrdlistaPage() {
           {sorted.map((item, i) => (
             <div
               key={item.term}
-              className="py-4 flex gap-6"
+              id={item.term.toLowerCase().replace(/[^a-z0-9åäö]+/g, '-').replace(/^-|-$/g, '')}
+              className="py-4 flex gap-6 scroll-mt-6"
               style={{
                 borderTop: i === 0 ? undefined : '1px solid var(--color-border)',
               }}

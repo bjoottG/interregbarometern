@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import FilterBar from '@/components/FilterBar';
@@ -219,7 +220,7 @@ export default function DiagramPage() {
         <div className="grid grid-cols-3 gap-4">
           <KPICard title="Antal partners" value={`${formatNumber(kpiAntalPartners(filtered))} st`} subtitle={`varav ${formatNumber(kpiUnikaPartners(filtered))} unika partners`} href="/tabell" />
           <KPICard title="Antal unika projekt" value={`${formatNumber(kpiAntalProjekt(filtered))} st`} subtitle="Varje projekt räknat en gång" href="/tabell" />
-          <KPICard title="EU-medel (ERDF)" value={formatBudget(kpiTotalBudget(filtered))} subtitle="Beviljat EU-stöd — inte total projektbudget" />
+          <KPICard title={<>EU-medel (<Link href="/ordlista#erdf-european-regional-development-fund" className="underline" style={{ textUnderlineOffset: 2 }}>ERDF</Link>)</>} value={formatBudget(kpiTotalBudget(filtered))} subtitle="Beviljat EU-stöd — inte total projektbudget" />
         </div>
 
         <div className="grid grid-cols-2 gap-5">
