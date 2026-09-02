@@ -61,18 +61,28 @@ export default function Navigation({ alignLeft }: { alignLeft?: boolean }) {
             <>
               <div className="fixed inset-0 z-[999]" onClick={() => setInfoOpen(false)} />
               <div
-                className="absolute right-0 top-full mt-2 z-[1000] rounded-xl px-5 py-4 shadow-lg w-80"
-                style={{ background: 'var(--color-kpi-bg)' }}
+                className="absolute right-0 top-full mt-2 z-[1000] rounded-lg px-4 py-3 shadow-lg w-80 bg-white border"
+                style={{ borderColor: 'var(--color-border)' }}
               >
-                <p className="text-sm font-semibold" style={{ color: 'var(--color-text-muted)' }}>
-                  Senast uppdaterad
+                <div className="flex items-start justify-between mb-2">
+                  <p className="text-sm font-bold" style={{ color: 'var(--color-text)' }}>
+                    Senast uppdaterad
+                  </p>
+                  <button
+                    onClick={() => setInfoOpen(false)}
+                    aria-label="Stäng"
+                    className="text-sm leading-none px-1"
+                    style={{ color: 'var(--color-text)' }}
+                  >
+                    ✕
+                  </button>
+                </div>
+                <p className="text-sm mb-3" style={{ color: 'var(--color-text)' }}>
+                  Uppgifterna uppdaterades senast {DATAUTTAG}.
                 </p>
-                <p className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }}>
-                  {DATAUTTAG}
-                </p>
-                <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-                  Tabellerna och diagrammen bygger på uppgifter som är inkomna innan detta datum.
-                  Ändringar som skett senare syns inte på webbplatsen.
+                <p className="text-sm" style={{ color: 'var(--color-text)' }}>
+                  Tabellerna och diagrammen bygger på uppgifter som är inkomna innan detta
+                  datum. Ändringar som skett senare syns inte på webbplatsen.
                 </p>
               </div>
             </>
