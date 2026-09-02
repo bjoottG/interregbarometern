@@ -12,10 +12,24 @@ interface Props {
 
 type SortKey = 'name' | 'projekt' | 'partners' | 'unikaPartners' | 'budget';
 
+// Länen ordnade från norr till söder (förvald sortering)
+const NORD_TILL_SYD = [
+  'Norrbottens län', 'Västerbottens län', 'Jämtlands län', 'Västernorrlands län',
+  'Gävleborgs län', 'Dalarnas län', 'Uppsala län', 'Värmlands län',
+  'Västmanlands län', 'Örebro län', 'Stockholms län', 'Södermanlands län',
+  'Östergötlands län', 'Västra Götalands län', 'Jönköpings län', 'Gotlands län',
+  'Kalmar län', 'Hallands län', 'Kronobergs län', 'Blekinge län', 'Skåne län',
+];
+
+function geoIndex(name: string): number {
+  const i = NORD_TILL_SYD.indexOf(name);
+  return i === -1 ? NORD_TILL_SYD.length : i;
+}
+
 export default function NutsTable({ rows, mode }: Props) {
   const { filters, setFilter } = useFilters();
-  const [sortKey, setSortKey] = useState<SortKey>('projekt');
-  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
+  const [sortKey, setSortKey] = useState<SortKey>('name');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
 
   const aggregated = useMemo(() => {
     const map = new Map<string, { projekts: Set<string>; partners: number; unikaPartners: Set<string>; budget: number }>();
@@ -35,6 +49,10 @@ export default function NutsTable({ rows, mode }: Props) {
 
   const sorted = useMemo(() => {
     return [...aggregated].sort((a, b) => {
+      if (sortKey === 'name' && mode === 'nuts3') {
+        const diff = geoIndex(a.name) - geoIndex(b.name);
+        return sortDir === 'asc' ? diff : -diff;
+      }
       const va = a[sortKey], vb = b[sortKey];
       if (typeof va === 'number' && typeof vb === 'number') {
         return sortDir === 'asc' ? va - vb : vb - va;
@@ -43,7 +61,7 @@ export default function NutsTable({ rows, mode }: Props) {
         ? String(va).localeCompare(String(vb), 'sv')
         : String(vb).localeCompare(String(va), 'sv');
     });
-  }, [aggregated, sortKey, sortDir]);
+  }, [aggregated, sortKey, sortDir, mode]);
 
   function handleSort(key: SortKey) {
     if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
